@@ -1,0 +1,10 @@
+.body {
+  background: black;
+}
+
+p {
+  color: white;
+  text-align: center;
+  margin: 0px;
+  padding: 40px;
+}

@@ -1,0 +1,27 @@
+header {
+  background: black;
+  color: white;
+}
+
+.header-center {
+  text-align: center;
+}
+
+.header-right {
+  text-align: right;
+}
+
+footer {
+  background: #a62c2c;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+.call-box {
+  border: 2px solid yellow;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 1rem auto;
+  display: inline-block;
+}
