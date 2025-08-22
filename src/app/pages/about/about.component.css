@@ -1,6 +1,26 @@
-.body {
-  background: var(--prints-white);
-  margin: 1.5rem;
+section.body {
+  display: flex;
+  align-items: stretch; /* vertically align image and text */
+  gap: 2rem; /* space between image and text */
+  padding: 2rem; /* optional spacing around */
+}
+
+.about-img {
+  flex: 0 0 auto; /* don’t let it shrink */
+  margin: -32px;
+  overflow: hidden; /* crop anything outside container */
+}
+
+.about-img img {
+  height: 100%; /* match parent height */
+  width: auto; /* maintain aspect ratio */
+  max-width: 33vw;
+  object-fit: cover; /* zoom + crop instead of stretching */
+  display: block;
+}
+
+.about-text {
+  flex: 1; /* let text take up remaining space */
 }
 
 p {
@@ -12,8 +32,30 @@ p {
   font-size: 1.2rem;
 }
 
+@media (max-width: 800px) {
+  section.body {
+    flex-direction: column;
+  }
+
+  .about-img {
+    order: -1; /* puts image above text */
+    width: 100vw;
+    height: 300px; /* optional: control height on mobile */
+    overflow: hidden;
+  }
+
+  .about-img img {
+    max-width: 100vw;
+    max-height: 276.8px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
 @media (max-width: 767px) {
-  .body {
+  body {
     margin: 1.5rem 0.5rem; /* Smaller margin on mobile */
   }
 
