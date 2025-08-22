@@ -1,9 +1,19 @@
 <section class="body">
-  <div class="file-uploader">
-    <p>Upload and Drop Files</p>
+  <!-- Fullscreen drag overlay -->
+  <div class="drag-overlay" [class.active]="isDragging"></div>
+
+  <div
+    class="file-uploader"
+    (dragover)="onDragOver($event)"
+    (drop)="onDrop($event)"
+    (dragleave)="onDragLeave($event)"
+    [class.dragging]="isDragging">
+    <p>Drag and Drop Files</p>
     <p>or</p>
     <div class="btn-div">
-      <button class="upload-btn">Upload Files</button>
+      <button class="upload-btn" (click)="fileInput.click()">Upload Files</button>
+      <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
     </div>
   </div>
+  <p id="upload-status">{{ uploadStatus }}</p>
 </section>

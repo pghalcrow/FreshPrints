@@ -1,26 +1,57 @@
 .hero {
   text-align: center;
-  background: white;
-  padding: 2rem;
+  height: 40vh;
+  overflow: hidden;
 }
-.hero-image {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
+
+h2 b {
+  font-size: 2.2rem;
 }
+
+.hero-overlay {
+  z-index: 10;
+  max-width: 90%;
+  padding: 1rem;
+}
+
 .emergency-title {
-  color: #c00;
+  color: var(--prints-red);
   font-size: 2rem;
 }
 .emergency-subtext {
-  color: #c00;
+  color: var(--prints-red);
   font-size: 1.2rem;
+}
+
+.carousel-inner img {
+  height: 40vh;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.carousel-fade .carousel-item {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
+}
+
+.carousel-fade .carousel-item.active,
+.carousel-fade .carousel-item-next.carousel-item-start,
+.carousel-fade .carousel-item-prev.carousel-item-end {
+  opacity: 1;
+  z-index: 1;
+}
+
+.carousel-fade .active.carousel-item-start,
+.carousel-fade .active.carousel-item-end {
+  opacity: 0;
+  z-index: 0;
 }
 
 .info {
   background: black;
-  color: white;
-  padding: 1rem 4rem;
+  color: var(--prints-white);
+  padding: 1.5rem 4rem;
   text-align: center;
 }
 
@@ -39,7 +70,6 @@
 .products ul {
   list-style: none;
   padding: 0;
-  font-size: 1.2rem;
   text-align: center;
   margin: 0px;
 }
@@ -47,3 +77,35 @@
 .products li {
   font-weight: bold;
 }
+
+.desktop-break {
+  display: inline;
+}
+
+/* By default, hide the line break */
+.mobile-break {
+  display: none;
+}
+
+/* On smaller screens (mobile), show the break */
+@media (max-width: 755px) {
+  hr {
+    border-top: 1.5px solid black;
+    margin: 2px;
+  }
+  .desktop-break {
+    display: none;
+  }
+
+  .mobile-break {
+    display: inline;
+  }
+}
+
+@media (max-width: 767px) {
+  .info {
+    padding: 1.5rem 0.5rem; /* Smaller margin on mobile */
+  }
+}
+
+/* 755 */

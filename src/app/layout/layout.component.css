@@ -13,7 +13,7 @@
   width: 100vw;
   z-index: 1000;
   background: black;
-  color: white;
+  color: var(--prints-white);
   padding: 0.5rem 1rem;
 }
 
@@ -24,21 +24,50 @@
   flex: 1;
 }
 
-header img {
-  width: 350px;
+.header-left {
+  visibility: hidden;
+  display: flex;
+  color: var(--prints-white);
+  font-size: 1.4rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-box {
+  height: 100px;
+  min-width: 364px;
+  max-width: 450px;
+  background: var(--prints-white);
+  color: var(--prints-red);
+  margin: 10px;
+}
+
+.logo-box img {
+  width: 90%;
+  max-width: 327.49px;
+}
+
+.logo-box p {
+  margin: 0px;
+  font-size: 1.1rem;
+}
+
+.header-center a {
+  text-decoration: none;
 }
 
 .header-center {
   text-align: center;
 }
 
+/* Default mobile: header-right horizontal */
 .header-right {
+  display: flex;
+  flex-direction: row; /* horizontal on mobile */
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   text-align: center;
-  margin-right: 10px;
-}
-
-.header-left {
-  visibility: hidden;
 }
 
 nav {
@@ -46,29 +75,57 @@ nav {
 }
 
 nav a {
-  border: 1.5px solid #004380;
+  border: 1.5px solid var(--prints-blue);
   padding: 2px;
   margin: 2px;
   text-decoration: none;
-  font-size: 12px;
+  color: var(--prints-white);
+  font-size: 1rem;
+}
+
+nav.navbar-nav a {
   color: white;
+  font-size: 12px;
+  border: 1.5px solid var(--prints-blue);
+  padding: 2px;
+  margin: 2px;
+  text-decoration: none;
+}
+
+.navbar-toggler {
+  border-color: white;
+}
+
+.custom-offcanvas {
+  background-color: var(--prints-dark-blue);
+  color: var(--prints-white);
+  text-align: center;
+  width: 50vw;
+}
+
+.custom-offcanvas .nav-link {
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
 }
 
 .main-content {
   flex: 1 0 auto;
-  margin-top: 96.29px; /* navbar height */
+  /* navbar height */
+  margin-top: 136px;
   display: flex;
   flex-direction: column;
 }
 
 footer {
-  background: #b9272c;
-  color: white;
+  padding-top: 1.5rem;
+  background: var(--prints-red);
+  color: var(--prints-white);
   text-align: center;
 }
 
 .call-box {
-  border: 2px solid yellow;
+  margin-bottom: 1rem;
+  border: 2px solid var(--prints-yellow);
   padding: 0.25rem 0.5rem;
   font-size: 1.5rem;
   display: inline-block;
@@ -76,4 +133,87 @@ footer {
 
 .copyright {
   font-size: 10px;
+}
+
+/* Nav link styling */
+.nav-link {
+  border: 1.5px solid var(--prints-blue);
+  padding: 4px 8px;
+  margin: 2px;
+  text-decoration: none;
+  font-size: 12px;
+  color: var(--prints-white);
+}
+
+.nav-link.active {
+  font-weight: bold;
+}
+
+/* Responsive behavior */
+@media (max-width: 800px) {
+  .header-left {
+    visibility: visible;
+  }
+
+  .phone {
+    display: none !important;
+  }
+
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .navbar-toggler {
+    display: inline-block !important;
+  }
+}
+
+@media (min-width: 801px) {
+  header img {
+    width: 350px;
+  }
+
+  /* On desktop, stack phone + nav vertically */
+  .header-right {
+    flex-direction: column;
+    align-items: center; /* center horizontally */
+    justify-content: center;
+  }
+
+  /* Add some margin to the nav to separate it from phone */
+  .desktop-nav {
+    margin-top: 0px; /* space below phone */
+  }
+
+  .navbar-toggler {
+    display: none !important;
+  }
+
+  .offcanvas {
+    display: none !important;
+    background-color: var(--prints-dark-blue);
+  }
+
+  .main-content {
+    margin-top: 136px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-box {
+    height: auto;
+    min-width: 260px;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .logo-box img {
+    width: 95%;
+    max-width: 250px;
+  }
+
+  .logo-box p {
+    font-size: 0.95rem;
+  }
 }
