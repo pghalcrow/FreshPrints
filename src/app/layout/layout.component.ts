@@ -11,6 +11,7 @@ import {RouterOutlet, Router, NavigationEnd, RouterModule } from '@angular/route
 
 export class LayoutComponent implements OnInit {
   navButtons: { label: string; url: string }[] = [];
+  currentYear = new Date().getFullYear();
 
   constructor(private router: Router) {}
 

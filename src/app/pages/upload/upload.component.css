@@ -24,7 +24,7 @@
 }
 
 p {
-  color: var(--prints-white);
+  color: var(--prints-blue);
   text-align: center;
   margin: 0px;
 }
@@ -60,4 +60,150 @@ p {
 
 .drag-overlay.active {
   opacity: 1;
+}
+
+.name-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-overlay {
+  position: fixed; /* sits on top of everything */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#form-box {
+  width: 40vw;
+  max-width: 600px;
+  min-width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 2px solid var(--prints-blue);
+  border-radius: 12px;
+  padding: 1rem;
+  background: var(--prints-white);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  overflow-x: hidden; /* prevent horizontal scroll */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+#form-box label {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.name-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* allows them to stack on small screens */
+}
+
+.name-row .form-group {
+  flex: 1 1 45%; /* grow, shrink, take ~45% width */
+  min-width: 120px; /* prevent being too tiny */
+}
+
+#form-box .file-uploader {
+  padding: 1rem; /* reduce padding inside the form */
+  border: 2px dashed var(--prints-blue);
+  border-radius: 12px;
+  margin-top: 0.5rem;
+  word-wrap: break-word; /* keep long file names inside */
+}
+
+#form-box .file-uploader p {
+  font-size: 14px;
+}
+
+#form-box input {
+  margin-bottom: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 1.5px solid var(--prints-blue);
+  font-size: 0.9rem;
+  border-radius: 6px;
+  background: var(--prints-white);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#form-box input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+#btn-submit {
+  border: 1.5px solid var(--prints-yellow);
+  background: var(--prints-yellow);
+  color: black;
+}
+
+#btn-submit:hover {
+  border: 1.5px solid var(--prints-blue);
+  background: var(--prints-blue);
+  color: var(--prints-white);
+}
+
+.upload-btn:hover {
+  background: var(--prints-blue);
+}
+
+.close-btn {
+  border: 1.5px solid var(--prints-blue);
+  background: black;
+  font-size: 18px;
+  color: var(--prints-white);
+  cursor: pointer;
+  margin-right: auto;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  background: var(--prints-blue);
+}
+
+.is-invalid {
+  border: 2px solid red !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+  #form-box {
+    width: 90vw;
+    max-height: 95vh;
+  }
+  .name-row {
+    flex-direction: column; /* stack First + Last Name */
+  }
 }

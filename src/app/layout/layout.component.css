@@ -57,6 +57,9 @@
 }
 
 .header-center {
+  display: flex;
+  justify-content: center; /* centers logo-box horizontally */
+  align-items: center; /* centers vertically if needed */
   text-align: center;
 }
 
@@ -90,6 +93,10 @@ nav.navbar-nav a {
   padding: 2px;
   margin: 2px;
   text-decoration: none;
+}
+
+nav a:hover {
+  background-color: var(--prints-blue);
 }
 
 .navbar-toggler {

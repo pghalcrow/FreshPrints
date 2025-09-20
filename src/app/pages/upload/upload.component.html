@@ -1,4 +1,4 @@
-<section class="body">
+<section class="body" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
   <!-- Fullscreen drag overlay -->
   <div class="drag-overlay" [class.active]="isDragging"></div>
 
@@ -17,3 +17,104 @@
   </div>
   <p id="upload-status">{{ uploadStatus }}</p>
 </section>
+
+<div class="form-overlay" *ngIf="showForm">
+  <form id="form-box" (ngSubmit)="onSubmit($event)" #uploadForm="ngForm" novalidate>
+    <button class="close-btn" type="button" (click)="closeForm()">X</button>
+
+    <!-- Name Row -->
+    <div class="name-row">
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="firstName">*First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          [(ngModel)]="firstName"
+          name="firstName"
+          #firstNameCtrl="ngModel"
+          required
+          [ngClass]="{ 'is-invalid': firstNameCtrl.invalid && firstNameCtrl.touched }"
+          (blur)="firstNameCtrl.control.markAsTouched()" />
+        <div class="error-message" *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched">First name is required.</div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="lastName">*Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          [(ngModel)]="lastName"
+          name="lastName"
+          #lastNameCtrl="ngModel"
+          required
+          [ngClass]="{ 'is-invalid': lastNameCtrl.invalid && lastNameCtrl.touched }"
+          (blur)="lastNameCtrl.control.markAsTouched()" />
+        <div class="error-message" *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched">Last name is required.</div>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">*Email:</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="email"
+        name="email"
+        #emailCtrl="ngModel"
+        required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        [ngClass]="{ 'is-invalid': emailCtrl.invalid && emailCtrl.touched }"
+        (blur)="emailCtrl.control.markAsTouched()" />
+      <div class="error-message" *ngIf="emailCtrl.errors?.['required'] && emailCtrl.touched">Email is required.</div>
+      <div class="error-message" *ngIf="emailCtrl.errors?.['pattern'] && emailCtrl.touched">
+        Please enter a valid email.
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label for="phone">*Phone Number:</label>
+      <input
+        type="tel"
+        id="phone"
+        maxlength="14"
+        [(ngModel)]="phone"
+        name="phone"
+        #phoneCtrl="ngModel"
+        required
+        (input)="formatPhone($event)"
+        (keypress)="allowOnlyNumbers($event)"
+        inputmode="numeric"
+        [ngClass]="{ 'is-invalid': phoneCtrl.touched && isPhoneInvalid() }"
+        (blur)="phoneCtrl.control.markAsTouched()" />
+      <div class="error-message" *ngIf="phoneCtrl.errors?.['required'] && phoneCtrl.touched">
+        Phone number is required.
+      </div>
+      <div class="error-message" *ngIf="phoneCtrl.touched && isPhoneInvalid()">Must be 10 digits.</div>
+    </div>
+
+    <!-- File Upload -->
+    <div class="form-group">
+      <label for="file">Upload File:</label>
+      <p *ngIf="selectedFile">Selected File: {{ selectedFile.name }}</p>
+      <p id="upload-status">{{ uploadStatus }}</p>
+      <div class="btn-div">
+        <button class="upload-btn" (click)="fileInput.click()" type="button">Change File</button>
+        <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
+      </div>
+    </div>
+
+    <!-- Captcha -->
+    <re-captcha [siteKey]="siteKey" size="invisible" (resolved)="onCaptchaResolved($event)"> </re-captcha>
+
+    <!-- Submit -->
+    <div class="btn-div">
+      <button id="btn-submit" type="submit" class="upload-btn" [disabled]="uploadForm.invalid || !selectedFile">
+        Upload
+      </button>
+    </div>
+  </form>
+</div>
