@@ -26,14 +26,36 @@
 
       <!-- Desktop nav (inline) -->
       <nav class="desktop-nav d-none d-md-flex">
-        <a
-          *ngFor="let button of navButtons"
-          [routerLink]="button.url"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="nav-link">
-          {{ button.label }}
-        </a>
+        <ng-container *ngFor="let button of navButtons">
+          <!-- Regular button -->
+          <a
+            *ngIf="!button.children"
+            [routerLink]="button.url"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="nav-link">
+            {{ button.label }}
+          </a>
+
+          <!-- Dropdown button -->
+          <div *ngIf="button.children" class="nav-item dropdown" [class.show]="button.isOpen">
+            <a
+              class="nav-link dropdown-toggle"
+              role="button"
+              (click)="toggleDropdown(button)"
+              [attr.aria-expanded]="button.isOpen">
+              <!-- id="navbarDropdown" -->
+              <!-- data-bs-toggle="dropdown"
+              aria-expanded="false"> -->
+              {{ button.label }}
+            </a>
+            <ul class="dropdown-menu" [class.show]="button.isOpen">
+              <li *ngFor="let child of button.children">
+                <a class="dropdown-item" [routerLink]="child.url" (click)="closeDropdown(button)">{{ child.label }}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
       </nav>
 
       <!-- Hamburger for mobile -->
@@ -66,14 +88,38 @@
         <a href="tel:6195001959" style="color: inherit; text-decoration: none"> (619) 500-1959 </a>
       </div>
       <nav class="navbar-nav">
-        <a
-          class="nav-link"
-          *ngFor="let button of navButtons"
-          [routerLink]="button.url"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }">
-          {{ button.label }}
-        </a>
+        <ng-container *ngFor="let button of navButtons">
+          <a
+            *ngIf="!button.children"
+            class="nav-link"
+            [routerLink]="button.url"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            data-bs-dismiss="offcanvas">
+            {{ button.label }}
+          </a>
+
+          <div *ngIf="button.children" class="nav-item dropdown" [class.show]="button.isOpen">
+            <a
+              class="nav-link dropdown-toggle"
+              role="button"
+              (click)="toggleDropdown(button)"
+              [attr.aria-expanded]="button.isOpen">
+              {{ button.label }}
+            </a>
+            <ul class="dropdown-menu">
+              <li *ngFor="let child of button.children">
+                <a
+                  class="dropdown-item"
+                  [routerLink]="child.url"
+                  data-bs-dismiss="offcanvas"
+                  (click)="closeDropdown(button)"
+                  >{{ child.label }}</a
+                >
+              </li>
+            </ul>
+          </div>
+        </ng-container>
       </nav>
     </div>
   </div>

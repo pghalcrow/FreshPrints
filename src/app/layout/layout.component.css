@@ -78,12 +78,23 @@ nav {
 }
 
 nav a {
+  background-color: var(--prints-blue);
   border: 1.5px solid var(--prints-blue);
-  padding: 2px;
-  margin: 2px;
+  padding: 4px;
+  margin: 4px;
   text-decoration: none;
   color: var(--prints-white);
   font-size: 1rem;
+}
+
+.nav-link.first-button {
+  background-color: var(--prints-yellow); /* first button color */
+  border: 1.5px solid var(--prints-yellow);
+  color: black;
+}
+
+.nav-link.other-button {
+  background-color: var(--prints-blue); /* all other buttons */
 }
 
 nav.navbar-nav a {
@@ -96,7 +107,10 @@ nav.navbar-nav a {
 }
 
 nav a:hover {
-  background-color: var(--prints-blue);
+  /* background-color: var(--prints-blue); */
+  background-color: var(--prints-white);
+  border: 1.5px solid var(--prints-white);
+  color: black;
 }
 
 .navbar-toggler {
@@ -156,8 +170,35 @@ footer {
   font-weight: bold;
 }
 
+.dropdown-menu {
+  background-color: black;
+  right: 0;
+  text-align: center;
+  padding-right: 8px;
+  overflow: hidden;
+  max-height: 0; /* start hidden */
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  display: block; /* keeps layout stable */
+  visibility: hidden;
+}
+
+.dropdown.show .dropdown-menu {
+  max-height: 500px; /* large enough for content */
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.navbar-nav .dropdown-item {
+  text-align: center;
+  height: 31px;
+  font-size: 1rem;
+}
+
 /* Responsive behavior */
-@media (max-width: 800px) {
+@media (max-width: 1144px) {
   .header-left {
     visibility: visible;
   }
@@ -175,21 +216,19 @@ footer {
   }
 }
 
-@media (min-width: 801px) {
+@media (min-width: 1145px) {
   header img {
     width: 350px;
   }
 
-  /* On desktop, stack phone + nav vertically */
   .header-right {
     flex-direction: column;
-    align-items: center; /* center horizontally */
+    align-items: center;
     justify-content: center;
   }
 
-  /* Add some margin to the nav to separate it from phone */
   .desktop-nav {
-    margin-top: 0px; /* space below phone */
+    margin-top: 0px;
   }
 
   .navbar-toggler {
