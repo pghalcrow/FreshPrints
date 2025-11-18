@@ -1,6 +1,6 @@
 # FreshPrints
 
-**Current Version:** v2.0.0
+**Current Version:** v2.1.0
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
 
@@ -70,4 +70,11 @@ For more information on using the Angular CLI, including detailed command refere
 ngrok http 4200
 
 ng serve --host 0.0.0.0 --disable-host-check
+```
+
+## Pushing tags
+
+```bash
+git tag -a v2.1.1 -m "Release v2.1.1" # replace with current version
+git push origin v2.1.1
 ```

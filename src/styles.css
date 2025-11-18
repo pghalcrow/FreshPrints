@@ -53,6 +53,13 @@ body {
   min-height: 0;
 }
 
+.info-text h1 {
+  text-align: center;
+  color: var(--prints-blue);
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
 .info-text h2 {
   text-align: center;
   color: var(--prints-blue);
@@ -60,11 +67,61 @@ body {
   margin-bottom: 2rem;
 }
 
-/* text styling */
 .info-text p {
   margin: 0 0 1rem 0;
   color: var(--prints-blue);
   padding: 10px 40px;
+  font-size: 1.2rem;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 2rem;
+}
+
+table {
+  width: 100%;
+  border: 2px solid var(--prints-blue) !important;
+  border-radius: 20px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.95rem;
+  margin: 24px 0px;
+}
+
+/* Header row */
+table thead th {
+  background: rgba(0, 123, 255, 0.15);
+  padding: 1rem;
+  color: var(--prints-blue);
+  font-weight: bold;
+  text-align: left;
+  border-bottom: 2px solid var(--prints-blue);
+}
+
+/* Body rows */
+table tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table tbody tr:hover {
+  background: rgba(0, 123, 255, 0.06);
+}
+
+table tbody td:first-child {
+  color: var(--prints-blue);
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.products-li {
+  color: var(--prints-blue);
   font-size: 1.2rem;
 }
 
