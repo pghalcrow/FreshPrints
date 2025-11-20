@@ -5,3 +5,49 @@
   min-height: 0;
   box-sizing: border-box;
 }
+
+h1 {
+  padding-top: 24px;
+}
+
+p {
+  text-align: center;
+}
+
+.info-text {
+  padding: 0px;
+}
+
+.with-background {
+  width: 100%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--prints-dark-blue);
+  padding: 24px 3rem;
+  margin-bottom: 24px;
+}
+
+.with-background h2 {
+  padding-left: 40px;
+  text-align: left;
+  color: var(--prints-white);
+}
+
+.with-background p {
+  text-align: left;
+  color: var(--prints-white);
+}
+
+.info-text ul {
+  list-style-position: inside;
+  padding-left: 40px;
+  color: var(--prints-white);
+}
+
+/* Size of large smart phone */
+@media (max-width: 450px) {
+  * {
+    overflow-x: hidden !important;
+  }
+}

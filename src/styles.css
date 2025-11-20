@@ -16,6 +16,11 @@ body {
 body {
   margin: 0px;
   font-size: 1.4rem;
+  overflow-x: hidden;
+}
+
+body.offcanvas-open {
+  overflow-x: hidden;
 }
 
 .info-page {
@@ -81,13 +86,13 @@ body {
 }
 
 table {
-  width: 100%;
+  max-width: 450px;
   border: 2px solid var(--prints-blue) !important;
   border-radius: 20px;
   border-collapse: separate;
   border-spacing: 0;
   font-size: 0.95rem;
-  margin: 24px 0px;
+  margin: 24px auto;
 }
 
 /* Header row */
@@ -125,6 +130,43 @@ table tbody td:first-child {
   font-size: 1.2rem;
 }
 
+li {
+  margin-bottom: 12px;
+}
+
+/* Animations */
+/* initial state: offscreen to the right */
+.slide-in-right {
+  transform: translateX(100%);
+  opacity: 1;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* final state: in place */
+.slide-in-right.active {
+  transform: translateX(0);
+}
+
+.slide-in-left {
+  transform: translateX(-100%);
+  opacity: 1;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* final state: in place */
+.slide-in-left.active {
+  transform: translateX(0);
+}
+
+img {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+img.loaded {
+  opacity: 1;
+}
+
 /* Mobile: stack image above text */
 @media (max-width: 800px) {
   .info-page {
@@ -144,13 +186,25 @@ table tbody td:first-child {
     object-fit: cover;
   }
 
-  .info-text p {
-    padding: 8px 20px;
+  .with-background h2 {
+    padding: 8px 20px !important;
+  }
+
+  .with-background p {
+    padding: 8px 20px !important;
+  }
+
+  ul {
+    padding: 8px 20px !important;
   }
 }
 
 @media (max-width: 600px) {
   body {
     font-size: 1rem;
+  }
+
+  table {
+    width: 90%;
   }
 }

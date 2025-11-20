@@ -5,3 +5,7 @@
   min-height: 0;
   box-sizing: border-box;
 }
+
+.info-page {
+  overflow-x: hidden;
+}

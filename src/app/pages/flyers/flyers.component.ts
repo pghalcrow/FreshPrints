@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { SeoService } from '../../services/seo.service';
+import { FadeImageDirective } from '../../directives/fade-image.directive';
+import { SlideInDirective } from '../../directives/slide-in.directive';
 
 @Component({
   selector: 'app-flyers',
-  imports: [],
+  imports: [FadeImageDirective, SlideInDirective],
   templateUrl: './flyers.component.html',
   styleUrl: './flyers.component.css'
 })

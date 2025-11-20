@@ -1,6 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterOutlet, Router, NavigationEnd, RouterModule } from '@angular/router';
+import { FadeImageDirective } from '../directives/fade-image.directive';
 
 interface NavButton {
   label: string;
@@ -11,7 +12,7 @@ interface NavButton {
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, CommonModule, RouterModule],
+  imports: [RouterOutlet, CommonModule, RouterModule, FadeImageDirective],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })

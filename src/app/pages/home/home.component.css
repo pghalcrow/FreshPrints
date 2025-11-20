@@ -1,12 +1,30 @@
+.home-page {
+  overflow-x: hidden;
+}
+
 .hero {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 40vh;
+  position: relative;
   overflow: hidden;
 }
 
 h1 {
-  padding-bottom: 24px;
+  display: inline-block;
+  width: 350px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 b {
   font-weight: bold;
+  font-size: 2.2rem;
+}
+
+h2 {
+  margin-bottom: 32px;
 }
 
 h2 b {
@@ -14,9 +32,11 @@ h2 b {
 }
 
 .hero-overlay {
-  z-index: 10;
-  max-width: 90%;
-  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  z-index: 100;
 }
 
 .emergency-title {
@@ -31,10 +51,9 @@ h2 b {
 .carousel-inner img {
   height: 40vh;
   object-fit: cover;
-  opacity: 0.35;
 }
 
-.carousel-fade .carousel-item {
+/* .carousel-fade .carousel-item {
   opacity: 0;
   transition: opacity 1s ease-in-out;
   z-index: 0;
@@ -51,7 +70,7 @@ h2 b {
 .carousel-fade .active.carousel-item-end {
   opacity: 0;
   z-index: 0;
-}
+} */
 
 .info {
   background: black;
@@ -102,6 +121,16 @@ h2 b {
   margin-bottom: 24px;
 }
 
+.with-background h2 {
+  text-align: left;
+  padding-left: 40px;
+  font-weight: bold;
+}
+.with-background p {
+  text-align: left;
+  padding-left: 40px;
+}
+
 .full-bleed {
   width: 100vw;
   position: relative;
@@ -113,9 +142,10 @@ h2 b {
 }
 
 .full-bleed img {
-  width: 100%;
+  width: 80%;
   height: auto;
   display: block;
+  margin: 0 auto 25px;
 }
 
 .products {
@@ -139,6 +169,9 @@ h2 b {
 
 ul {
   margin-top: 24px;
+  list-style-position: inside;
+  padding-left: 40px;
+  color: var(--prints-white);
 }
 
 li {
@@ -153,9 +186,37 @@ li {
   display: inline;
 }
 
-/* By default, hide the line break */
 .mobile-break {
   display: none;
+}
+
+/* Animations */
+/* initial state: offscreen to the right */
+
+.slide-wrapper {
+  margin-top: 100px;
+  position: relative; /* just ensures normal stacking context */
+}
+
+.slide-in-right {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* final state: in place */
+.slide-in-right.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.carousel-img {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+
+.carousel-img.loaded {
+  opacity: 0.35;
 }
 
 /* On smaller screens (mobile), show the break */
@@ -176,7 +237,7 @@ li {
 
 @media (max-width: 767px) {
   .info {
-    padding: 1.5rem 0.5rem; /* Smaller margin on mobile */
+    padding: 1.5rem 0.5rem;
   }
 }
 
