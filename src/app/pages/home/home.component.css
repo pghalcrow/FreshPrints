@@ -33,10 +33,16 @@ h2 b {
 
 .hero-overlay {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   z-index: 100;
+}
+
+.hero-overlay p {
+  padding-top: 24px;
+  color: var(--prints-red);
 }
 
 .emergency-title {
@@ -78,6 +84,19 @@ h2 b {
   padding: 1.5rem 4rem;
   text-align: center;
 }
+
+.info button {
+  border: none;
+  color: var(--prints-white);
+  background-color: var(--prints-blue);
+  margin-bottom: 20px; /* less than 24 because it looks like it fits in better */
+}
+
+.info button:hover {
+  color: black;
+  background-color: var(--prints-white);
+}
+
 .no-wrap {
   white-space: nowrap;
 }
