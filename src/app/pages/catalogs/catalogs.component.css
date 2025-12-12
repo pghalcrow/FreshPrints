@@ -5,3 +5,11 @@
   min-height: 0;
   box-sizing: border-box;
 }
+
+.with-background,
+.h3-body,
+.item,
+.info-text {
+  position: relative;
+  overflow-x: hidden;
+}

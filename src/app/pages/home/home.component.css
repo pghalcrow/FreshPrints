@@ -162,6 +162,7 @@ h2 b {
 
 .full-bleed img {
   width: 80%;
+  border-radius: 20px;
   height: auto;
   display: block;
   margin: 0 auto 25px;
@@ -263,6 +264,12 @@ li {
 @media (max-width: 600px) {
   .hero {
     margin-top: 5px;
+  }
+
+  .info button {
+    padding: 14px 28px; /* makes it taller & wider */
+    font-size: 1.25rem;
+    font-weight: bold;
   }
 }
 
