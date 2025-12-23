@@ -184,7 +184,7 @@ export class UploadComponent {
   // ---------------- Backend requests ----------------
   private requestUploadUrl(payload: any, attempt = 1): void {
     this.http.post<{ uploadUrl: string; fileKey: string }>(
-      'https://q6qu4gywcqxh4psjlosdhn3zeq0oewzx.lambda-url.us-east-2.on.aws/',
+      'https://q6qu4gywcqxh4psjlosdhn3zeq0oewzx.lambda-url.us-east-2.on.aws/',   // update this line
       payload
     ).subscribe({
       next: ({ uploadUrl }) => this.uploadFile(uploadUrl),

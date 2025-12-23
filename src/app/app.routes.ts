@@ -11,6 +11,7 @@ import { PostcardsComponent } from './pages/postcards/postcards.component';
 import { SleevesComponent } from './pages/sleeves/sleeves.component';
 import { StickersComponent } from './pages/stickers/stickers.component';
 import { BookletsComponent } from './pages/booklets/booklets.component';
+import { FilesRedirectComponent } from './files-redirect/files-redirect.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,8 @@ export const routes: Routes = [
       { path: 'postcards', component: PostcardsComponent},
       { path: 'sleeves', component: SleevesComponent},
       { path: 'stickers', component: StickersComponent},
-      { path: 'upload', component: UploadComponent }
+      { path: 'upload', component: UploadComponent },
+      { path: 'files/:fileKey', component: FilesRedirectComponent}
     ],
   },
   { path: '**', redirectTo: '' },
