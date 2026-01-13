@@ -1,6 +1,6 @@
 # FreshPrints
 
-**Current Version:** v2.3.1
+**Current Version:** v2.4.0
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
 

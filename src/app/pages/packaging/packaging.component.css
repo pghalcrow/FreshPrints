@@ -5,3 +5,18 @@
   min-height: 0;
   box-sizing: border-box;
 }
+
+.no-background {
+  padding-top: 24px;
+}
+
+.no-background-list {
+  color: var(--prints-blue);
+  text-align: center;
+  list-style-type: none;
+}
+
+.no-background-list li {
+  font-style: italic;
+  font-weight: bold;
+}
