@@ -1,0 +1,158 @@
+<!-- src/app/pages/home/home.component.html -->
+<section class="hero position-relative">
+  <!-- Overlay text block -->
+  <div class="hero-overlay position-absolute top-50 start-50 translate-middle text-center text-white">
+    <h1 class="emergency-title"><b>Emergency Printing in San Diego, CA</b></h1>
+    <p><b>(same-day and rush orders)</b></p>
+    <!-- <p class="emergency-subtext">
+      Same Day
+      <span class="mobile-break">
+        <br />
+        <hr />
+      </span>
+      <span class="desktop-break">|</span>
+      Next Day
+      <span class="mobile-break">
+        <br />
+        <hr />
+      </span>
+      <span class="desktop-break">|</span>
+      Gotta Have By
+      <br />
+      <span class="mobile-break">
+        <hr />
+      </span>
+      <span class="no-wrap">Serving San Diego County</span>
+      <span class="mobile-break">
+        <br />
+        <hr />
+      </span>
+      <span class="desktop-break">|</span>
+      <span class="no-wrap">Delivering 7 Days A week</span>
+    </p> -->
+  </div>
+
+  <!-- Carousel -->
+  <div id="myCarousel" class="carousel slide carousel-fade w-100" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <picture>
+          <source srcset="/assets/images/booklets.webp" type="image/webp" />
+          <img
+            src="assets/images/booklets.jpg"
+            class="d-block w-100 carousel-img"
+            alt="Printed quarterly financial report"
+            appFadeImage />
+        </picture>
+      </div>
+      <!-- <div class="carousel-item">
+        <picture>
+          <source srcset="/assets/images/home_img_2.webp" type="image/webp" />
+          <img src="/assets/images/home_img_2.jpg" class="d-block w-100" alt="Banner Slide 2" />
+        </picture>
+      </div>
+      <div class="carousel-item">
+        <picture>
+          <source srcset="/assets/images/home_img_3.webp" type="image/webp" />
+          <img src="/assets/images/home_img_3.jpg" class="d-block w-100" alt="Banner Slide 3" />
+        </picture>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<section class="info">
+  <button onclick="window.location.href='tel:6195001959'">Get a Quote Now</button>
+  <div class="img-text">
+    <p class="description">
+      When deadlines are tight, you don’t need excuses—you need results. Fresh Prints is San Diego County’s go-to source
+      for emergency printing. We specialize in printing and delivering premium-quality printed materials fast, and on
+      time, every time.
+      <br />
+      <b class="top-space"
+        >Ready for a custom quote? Let’s get started. Call us now at <a href="tel:6195001959">619-500-1959</a>.</b
+      >
+    </p>
+    <!-- <picture class="home-img">
+      <source srcset="/assets/images/booklets.webp" type="image/webp" />
+      <img src="assets/images/booklets.jpg" alt="Printing press image" />
+    </picture> -->
+  </div>
+  <!-- <div style="height: 1000px"></div> -->
+  <div class="with-background">
+    <!-- new wrapper -->
+    <div class="slide-in-right" slideIn>
+      <h2>Our Values: Fast, Simple, Reliable</h2>
+      <p class="description">
+        We keep the process simple so we can keep it quick. Whether you need a small, one-time print job completed or a
+        large order for your clients, we have the skillset, expertise, and printing equipment to ensure it gets done
+        professionally and on time.
+      </p>
+    </div>
+  </div>
+
+  <p class="description"><b>Our emergency printing services include but are not limited to the following:</b></p>
+  <table>
+    <tbody>
+      <tr onclick="window.location='/booklets';">
+        <td><a routerLink="/booklets">Booklets</a></td>
+        <td>Stand out at events, during presentations, or with product guides.</td>
+      </tr>
+      <tr onclick="window.location='/flyers';">
+        <td><a routerLink="/flyers">Flyers</a></td>
+        <td>Grab attention with vibrant, high-quality prints.</td>
+      </tr>
+      <tr onclick="window.location='/stickers';">
+        <td><a routerLink="/stickers">Stickers</a></td>
+        <td>Create custom shapes and finishes to help make your brand pop. Cut & stack.</td>
+      </tr>
+      <tr onclick="window.location='/flyers';">
+        <td><a routerLink="/flyers">Trifolds</a></td>
+        <td>Promote menus, brochures, and/or products.</td>
+      </tr>
+      <tr onclick="window.location='/catalogs';">
+        <td><a routerLink="/catalogs">Catalogs</a></td>
+        <td>Showcase your products in style.</td>
+      </tr>
+      <tr onclick="window.location='/postcards';">
+        <td><a routerLink="/postcards">Postcards</a></td>
+        <td>Make quick, impactful marketing pieces sure to leave a lasting impression.</td>
+      </tr>
+      <tr onclick="window.location='/labels';">
+        <td><a routerLink="/labels">Labels</a></td>
+        <td>Create durable, professional, and fully customizable <b>labels on rolls.</b></td>
+      </tr>
+      <tr onclick="window.location='/sleeves';">
+        <td><a routerLink="/sleeves">Sleeves and Packaging</a></td>
+        <td>Showcase high-quality solutions for your products.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="with-background">
+    <div class="full-bleed">
+      <picture>
+        <source srcset="/assets/images/stickers.webp" type="image/webp" />
+        <img src="assets/images/stickers.jpg" alt="custom cut sticker labels by Fresh Prints" appFadeImage />
+      </picture>
+    </div>
+    <div class="slide-in-right" slideIn>
+      <h2>Why Choose Fresh Prints?</h2>
+      <p class="description">
+        When deadlines are tight, we’ve got your back. Trusted by businesses across San Diego County, our team is the
+        one to call when you need fast, reliable printing in a pinch.
+        <b>Here’s why companies turn to us for their urgent print jobs:</b>
+      </p>
+      <ul>
+        <li><strong>Local and fast:</strong> San Diego-based delivery. We deliver right to you too!</li>
+        <li><strong>Organized:</strong> Every project is triple checked for quality and accuracy.</li>
+        <li><strong>Flexible:</strong> We have options for any size order.</li>
+        <li><strong>Trusted:</strong> We’re who San Diegans call when they’re in a bind.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="description">
+    When time is critical, trust Fresh Prints to get your materials printed and delivered—fresh off the press, exactly
+    when you need them.
+  </p>
+  <p class="description">Call us now at <a href="tel:6195001959">619-500-1959</a>.</p>
+</section>

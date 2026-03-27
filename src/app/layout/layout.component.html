@@ -1,0 +1,141 @@
+<div class="layout-container">
+  <header class="header">
+    <div class="header-left">
+      <a href="tel:6195001959" style="color: inherit; text-decoration: none">
+        <i class="fa-solid fa-phone" style="color: #ffffff"></i>
+      </a>
+    </div>
+
+    <div class="header-center">
+      <a href="/">
+        <div class="logo-box">
+          <p>- <b>Emergency Printing</b> -</p>
+          <div class="logo-img-wrapper">
+            <img src="/assets/images/fresh_prints.png" alt="Fresh Prints logo" appFadeImage />
+          </div>
+          <p><b>When Time Is Not On Your Side - We Are</b></p>
+        </div>
+      </a>
+    </div>
+
+    <div class="header-right d-flex align-items-center justify-content-center">
+      <span class="phone d-none d-md-flex align-items-center">
+        <a href="tel:6195001959" style="color: inherit; text-decoration: none">
+          <i class="fa-solid fa-phone" style="color: #ffffff"></i>
+          (619) 500-1959
+        </a>
+      </span>
+
+      <!-- Desktop nav (inline) -->
+      <nav class="desktop-nav d-none d-md-flex">
+        <ng-container *ngFor="let button of navButtons">
+          <!-- Regular button -->
+          <a
+            *ngIf="!button.children"
+            [routerLink]="button.url"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="nav-link">
+            {{ button.label }}
+          </a>
+
+          <!-- Dropdown button -->
+          <div *ngIf="button.children" class="nav-item dropdown" [class.show]="button.isOpen">
+            <a
+              class="nav-link dropdown-toggle"
+              role="button"
+              (click)="toggleDropdown(button)"
+              [attr.aria-expanded]="button.isOpen">
+              <!-- id="navbarDropdown" -->
+              <!-- data-bs-toggle="dropdown"
+              aria-expanded="false"> -->
+              {{ button.label }}
+            </a>
+            <ul class="dropdown-menu" [class.show]="button.isOpen">
+              <li *ngFor="let child of button.children">
+                <a class="dropdown-item" [routerLink]="child.url" (click)="closeDropdown(button)">{{ child.label }}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </nav>
+
+      <!-- Hamburger for mobile -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobileOffcanvasNav"
+        aria-controls="mobileOffcanvasNav"
+        aria-label="Toggle navigation"
+        style="color: white; font-size: 1.5rem">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Offcanvas Nav (Mobile Only) -->
+  <div
+    class="offcanvas offcanvas-end custom-offcanvas"
+    tabindex="-1"
+    id="mobileOffcanvasNav"
+    aria-labelledby="mobileOffcanvasNavLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="mobileOffcanvasNavLabel">Menu</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="mb-3 d-flex align-items-center gap-2 d-flex d-md-none">
+        <i class="fa-solid fa-phone" style="color: white"></i>
+        <a href="tel:6195001959" style="color: inherit; text-decoration: none"> (619) 500-1959 </a>
+      </div>
+      <nav class="navbar-nav">
+        <ng-container *ngFor="let button of navButtons">
+          <a
+            *ngIf="!button.children"
+            class="nav-link"
+            [routerLink]="button.url"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            data-bs-dismiss="offcanvas">
+            {{ button.label }}
+          </a>
+
+          <div *ngIf="button.children" class="nav-item dropdown" [class.show]="button.isOpen">
+            <a
+              class="nav-link dropdown-toggle"
+              role="button"
+              (click)="toggleDropdown(button)"
+              [attr.aria-expanded]="button.isOpen">
+              {{ button.label }}
+            </a>
+            <ul class="dropdown-menu">
+              <li *ngFor="let child of button.children">
+                <a
+                  class="dropdown-item"
+                  [routerLink]="child.url"
+                  data-bs-dismiss="offcanvas"
+                  (click)="closeDropdown(button)"
+                  >{{ child.label }}</a
+                >
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </nav>
+    </div>
+  </div>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <p><b>Need it Printed Now?</b></p>
+    <div class="call-box">
+      <a href="tel:6195001959" style="color: inherit; text-decoration: none"> (619) 500-1959 </a>
+    </div>
+    <p><b>Emergency Calls Only.</b></p>
+    <p class="copyright">© {{ currentYear }} Fresh Prints</p>
+  </footer>
+</div>
