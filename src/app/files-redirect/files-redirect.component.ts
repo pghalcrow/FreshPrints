@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-files-redirect',
+  imports: [CommonModule],
   template: `
     <p *ngIf="status">{{ status }}</p>
   `,
