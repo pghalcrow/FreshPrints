@@ -17,6 +17,10 @@ const routes = [
   '/stickers',
   '/upload',
 ];
+const routeAliases = [
+  { route: '/services', sourceRoute: '/' },
+  { route: '/contact', sourceRoute: '/upload' },
+];
 
 function run(command, args) {
   const result = spawnSync(command, args, { stdio: 'inherit' });
@@ -42,6 +46,30 @@ routes.forEach((route) => {
 
   if (!existsSync(prerenderedIndex)) {
     throw new Error(`Missing prerendered route file: ${prerenderedIndex}`);
+  }
+
+  run('aws', [
+    's3',
+    'cp',
+    prerenderedIndex,
+    `s3://${bucket}/${routePath}`,
+    '--content-type',
+    'text/html',
+    '--cache-control',
+    'no-cache',
+    '--region',
+    region,
+  ]);
+});
+
+routeAliases.forEach(({ route, sourceRoute }) => {
+  const routePath = route.replace(/^\//, '');
+  const prerenderedIndex = sourceRoute === '/'
+    ? resolve(outputDir, 'index.html')
+    : resolve(outputDir, sourceRoute.replace(/^\//, ''), 'index.html');
+
+  if (!existsSync(prerenderedIndex)) {
+    throw new Error(`Missing prerendered alias source file: ${prerenderedIndex}`);
   }
 
   run('aws', [
