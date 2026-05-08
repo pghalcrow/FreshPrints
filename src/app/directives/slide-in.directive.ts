@@ -9,6 +9,11 @@ export class SlideInDirective implements AfterViewInit {
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
+    if (typeof IntersectionObserver === 'undefined') {
+      this.el.nativeElement.classList.add('active');
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries, obs) => {
         entries.forEach(entry => {
@@ -24,4 +29,3 @@ export class SlideInDirective implements AfterViewInit {
     observer.observe(this.el.nativeElement);
   }
 }
-
