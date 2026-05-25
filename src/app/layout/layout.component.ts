@@ -47,6 +47,7 @@ export class LayoutComponent implements OnInit {
     { label: 'Home', url: '/' },
     { label: 'Upload Files', url: '/upload' },
     { label: 'About Us', url: '/about' },
+    { label: 'FAQ', url: '/faq' },
 
     { 
       label: 'Products',
