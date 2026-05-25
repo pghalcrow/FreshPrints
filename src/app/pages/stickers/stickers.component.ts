@@ -12,8 +12,8 @@ import { SeoService } from '../../services/seo.service';
 export class StickersComponent {
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Emergency Sticker Printing in San Diego, CA | Same-Day Rush Orders',
-      description: 'Need custom stickers printed fast? Fresh Prints offers emergency sticker printing in San Diego, CA with same-day turnaround. Call us now.',
+      title: 'Emergency Sticker Printing San Diego | Same-Day and Rush Custom Stickers | Fresh Prints',
+      description: 'Fresh Prints delivers emergency sticker printing for San Diego businesses. Custom stickers are our fastest production item. Same-day turnaround available on most orders. Call 619-500-1959 now.',
       keywords: 'emergency sticker printing San Diego, rush sticker printing, same-day sticker printing San Diego, custom stickers San Diego',
       canonical: 'https://realfreshprints.com/stickers',
       ogImage: 'https://realfreshprints.com/assets/images/stickers.webp'
