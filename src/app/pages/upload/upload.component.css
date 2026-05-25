@@ -17,16 +17,17 @@
 }
 
 .file-uploader {
-  border: 3px dashed var(--prints-blue);
+  border: 3px dashed var(--prints-yellow);
   border-radius: 20px;
   padding: 3rem 4rem;
   transition: border-color 0.2s ease-in-out;
 }
 
 p {
-  color: var(--prints-blue);
+  color: var(--prints-yellow);
   text-align: center;
   margin: 0px;
+  font-size: 1.8rem;
 }
 
 .btn-div {
@@ -37,10 +38,10 @@ p {
 .upload-btn {
   border: 1.5px solid var(--prints-blue);
   background: black;
-  padding: 0.5rem;
+  padding: 0.75rem 1.5rem;
   margin: 2px;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: var(--prints-white);
 }
 
@@ -50,8 +51,8 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 123, 255, 0.3); /* transparent blue */
-  border: 6px dashed var(--prints-blue);
+  background: rgba(244, 196, 48, 0.15);
+  border: 6px dashed var(--prints-yellow);
   z-index: 999;
   pointer-events: none; /* let mouse go through it */
   opacity: 0;
