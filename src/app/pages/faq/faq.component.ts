@@ -1,4 +1,5 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SeoService } from '../../services/seo.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { SeoService } from '../../services/seo.service';
   styleUrl: './faq.component.css'
 })
 export class FaqComponent implements AfterViewInit {
-  constructor(private seo: SeoService) {
+  constructor(private seo: SeoService, @Inject(PLATFORM_ID) private platformId: object) {
     this.seo.updatePageMeta({
       title: 'FAQ | Emergency Printing San Diego | Fresh Prints',
       description: 'Common questions about emergency printing turnarounds, file formats, pricing, delivery and business accounts. Fresh Prints — San Diego rush printing. Call 619-500-1959.',
@@ -19,6 +20,8 @@ export class FaqComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const navLinks = document.querySelectorAll<HTMLAnchorElement>('.faq-nav a[href^="#"]');
     const sections = Array.from(document.querySelectorAll<HTMLElement>('.faq-category'));
 
