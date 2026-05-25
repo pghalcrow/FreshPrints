@@ -12,8 +12,8 @@ import { SlideInDirective } from '../../directives/slide-in.directive';
 export class FlyersComponent {
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Same-Day & Rush Flyer Printing in San Diego, CA | Get it ASAP',
-      description: 'Get same-day or rush flyer printing in San Diego, CA. High-quality, fast turnaround, and local delivery. Perfect for promotions, events, and grand openings.',
+      title: 'Emergency Flyer Printing San Diego | Same-Day and Rush Flyers | Fresh Prints',
+      description: 'Fresh Prints delivers emergency flyer printing for San Diego businesses. Same-day and next-day rush flyers in full color, multiple sizes and finishes. Call 619-500-1959 now.',
       keywords: 'emergency flyer printing San Diego, rush flyer printing, same-day flyer printing San Diego, custom flyers San Diego',
       canonical: 'https://realfreshprints.com/flyers',
       ogImage: 'https://realfreshprints.com/assets/images/flyers.webp'

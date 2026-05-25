@@ -52,6 +52,14 @@ p {
   color: var(--prints-white);
 }
 
+.h3-body p {
+  text-align: left;
+}
+
+.item {
+  text-align: left;
+}
+
 .info-text ul {
   list-style-position: inside;
   padding-left: 40px;
