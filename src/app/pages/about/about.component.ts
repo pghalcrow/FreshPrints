@@ -12,8 +12,8 @@ import { SeoService } from '../../services/seo.service';
 export class AboutComponent {
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'About Fresh Prints | Emergency Printing Specialists in San Diego, CA',
-      description: 'Fresh Prints is San Diego\'s emergency printing specialist. With decades in commercial printing, we save deadlines with same-day and rush print orders.',
+      title: 'About Fresh Prints | Emergency B2B Printing Specialists in San Diego',
+      description: 'Fresh Prints specializes exclusively in emergency B2B printing in San Diego. Decades of commercial printing experience. When other printers say no, we deliver. Learn who we are.',
       keywords: 'emergency printing San Diego, rush printing company San Diego, same-day printing San Diego, about Fresh Prints',
       canonical: 'https://realfreshprints.com/about',
       ogImage: 'https://realfreshprints.com/assets/images/about_prints.webp'
