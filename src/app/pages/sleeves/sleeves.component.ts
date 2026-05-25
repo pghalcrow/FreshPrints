@@ -12,8 +12,8 @@ import { SeoService } from '../../services/seo.service';
 export class SleevesComponent {
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Emergency Sleeve Printing in San Diego, CA | Same-Day Packaging Sleeves',
-      description: 'Need custom packaging sleeves printed fast? Fresh Prints offers emergency sleeve printing in San Diego, CA for jars, boxes, bottles, and clothing.',
+      title: 'Emergency Packaging Sleeve Printing San Diego | Rush Sleeves for Jars, Bottles, Boxes | Fresh Prints',
+      description: 'Fresh Prints delivers emergency packaging sleeve printing for San Diego businesses. Custom sleeves for jars, bottles, boxes and apparel. Same-day and next-day turnaround available. Call 619-500-1959 now.',
       keywords: 'emergency sleeve printing San Diego, rush packaging sleeves, same-day sleeve printing San Diego, custom product sleeves San Diego',
       canonical: 'https://realfreshprints.com/sleeves',
       ogImage: 'https://realfreshprints.com/assets/images/sleeves_02.jpg'
