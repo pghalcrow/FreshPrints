@@ -50,8 +50,13 @@
   color: var(--prints-red);
   font-size: clamp(52px, 7.5vw, 104px);
   line-height: 0.9;
-  font-weight: 400;
+  font-weight: 800;
   text-align: left;
+}
+.hero .qty .upto {
+  display: block;
+  font-weight: 800;
+  font-size: clamp(18px, 2.4vw, 28px);
 }
 .hero .qty .unit {
   display: block;
@@ -64,16 +69,12 @@
   font-style: italic; transform: skewX(-6deg);
   font-size: clamp(20px, 2.6vw, 30px);
   padding: 6px 22px; display: inline-block;
+  width: 220px; text-align: center; box-sizing: border-box;
   color: var(--prints-white); font-weight: 400;
 }
 .badge-bar.dark { background: var(--prints-dark-blue); }
 .badge-bar.red { background: var(--prints-red); }
-.hero .badges .tagline {
-  font-style: normal; transform: none;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 800; font-size: 15px;
-  color: var(--prints-dark-blue); margin-top: 6px; letter-spacing: 0.02em;
-}
+.badge-bar.black { background: #000; }
 
 .hero .strip {
   max-width: 1180px; margin: 32px auto 0;
@@ -165,7 +166,7 @@
   font-size: 16px; color: var(--prints-dark-blue); font-weight: 600;
 }
 .spec-col li:last-child { border-bottom: none; }
-.spec-col li i { color: var(--prints-red); flex: none; }
+.spec-col li i { color: var(--prints-blue); flex: none; }
 .spec-col li b { color: var(--prints-blue); }
 
 .turn-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
