@@ -13,6 +13,7 @@ const routes = [
   '/labels',
   '/packaging',
   '/postcards',
+  '/kearny-postcards',
   '/sleeves',
   '/stickers',
   '/upload',
