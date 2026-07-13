@@ -13,6 +13,7 @@ import { StickersComponent } from './pages/stickers/stickers.component';
 import { BookletsComponent } from './pages/booklets/booklets.component';
 import { FilesRedirectComponent } from './files-redirect/files-redirect.component';
 import { FaqComponent } from './pages/faq/faq.component';
+import { KearnyPostcardsComponent } from './pages/kearny-postcards/kearny-postcards.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,7 @@ export const routes: Routes = [
       { path: 'labels', component: LabelsComponent},
       { path: 'packaging', component: PackagingComponent},
       { path: 'postcards', component: PostcardsComponent},
+      { path: 'kearny-postcards', component: KearnyPostcardsComponent},
       { path: 'sleeves', component: SleevesComponent},
       { path: 'stickers', component: StickersComponent},
       { path: 'faq', component: FaqComponent },

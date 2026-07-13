@@ -19,6 +19,7 @@ const routes = [
   { url: '/labels', changefreq: 'monthly', priority: 0.9 },
   { url: '/packaging', changefreq: 'monthly', priority: 0.9 },
   { url: '/postcards', changefreq: 'monthly', priority: 0.9 },
+  { url: '/kearny-postcards', changefreq: 'monthly', priority: 0.7 },
   { url: '/sleeves', changefreq: 'monthly', priority: 0.9 },
   { url: '/stickers', changefreq: 'monthly', priority: 0.9 },
   { url: '/upload', changefreq: 'yearly', priority: 0.5 },
