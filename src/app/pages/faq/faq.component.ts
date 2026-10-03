@@ -1,10 +1,11 @@
 import { Component, AfterViewInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-faq',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './faq.component.html',
   styleUrl: './faq.component.css'
 })
@@ -12,7 +13,7 @@ export class FaqComponent implements AfterViewInit {
   constructor(private seo: SeoService, @Inject(PLATFORM_ID) private platformId: object) {
     this.seo.updatePageMeta({
       title: 'FAQ | Emergency Printing San Diego | Fresh Prints',
-      description: 'Common questions about emergency printing turnarounds, file formats, pricing, delivery and business accounts. Fresh Prints — San Diego rush printing. Call 619-500-1959.',
+      description: 'Answers about emergency printing in San Diego: turnaround times, rush volume, delivery areas and file formats. Fresh Prints. Call 619-500-1959.',
       keywords: 'emergency printing FAQ San Diego, rush printing questions, same-day printing San Diego, Fresh Prints FAQ',
       canonical: 'https://realfreshprints.com/faq',
       ogImage: 'https://realfreshprints.com/assets/images/fresh_prints.png'

@@ -15,8 +15,8 @@ export class HomeComponent {
 
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Emergency Printing Services in San Diego | Same-Day and Rush Print Jobs | Fresh Prints',
-      description: 'Fresh Prints delivers emergency printing for San Diego businesses. Packaging, labels, stickers, booklets, marketing materials and more. When your deadline is yesterday, we deliver. Call now.',
+      title: 'Emergency & Same-Day Printing in San Diego | Fresh Prints',
+      description: 'Emergency printing for San Diego businesses: packaging, labels, stickers, booklets and marketing materials, same-day or next-day. Call 619-500-1959.',
       keywords: 'emergency printing San Diego, rush printing San Diego, same-day printing San Diego, fast printing San Diego CA',
       canonical: 'https://realfreshprints.com',
       ogImage: 'https://realfreshprints.com/assets/images/booklets.webp'

@@ -42,6 +42,9 @@
             src="assets/images/booklets.jpg"
             class="d-block w-100 carousel-img"
             alt="Printed quarterly financial report"
+            width="1800"
+            height="1200"
+            fetchpriority="high"
             appFadeImage />
         </picture>
       </div>
@@ -93,19 +96,20 @@
 
   <h2>Products include:</h2>
   <ul class="description centered-list">
-    <li>Product Packaging</li>
-    <li>Packaging Sleeves</li>
-    <li>Custom Roll Labels/Custom Stickers</li>
-    <li>Booklets and Catalogs</li>
-    <li>Postcards and Direct Mail Pieces</li>
-    <li>Sell Sheets and Flyers</li>
+    <li><a routerLink="/packaging">Product Packaging</a></li>
+    <li><a routerLink="/sleeves">Packaging Sleeves</a></li>
+    <li><a routerLink="/labels">Custom Roll Labels</a>/<a routerLink="/stickers">Custom Stickers</a></li>
+    <li><a routerLink="/booklets">Booklets</a> and <a routerLink="/catalogs">Catalogs</a></li>
+    <li><a routerLink="/postcards">Postcards</a> and Direct Mail Pieces</li>
+    <li>Sell Sheets and <a routerLink="/flyers">Flyers</a></li>
     <li>Brochures (various folds)</li>
   </ul>
   <p class="description"><b>Tell Us What You Need and When You Need It: <a href="tel:6195001959" style="color: white;">619-500-1959</a></b></p>
   <div class="with-background">
     <div class="full-bleed">
       <picture>
-        <img src="assets/images/FP_gen_factory.PNG" alt="Fresh Prints production facility" appFadeImage />
+        <source srcset="/assets/images/FP_gen_factory.webp" type="image/webp" />
+        <img src="assets/images/FP_gen_factory.jpg" alt="Fresh Prints production facility" width="1408" height="768" loading="lazy" appFadeImage />
       </picture>
     </div>
     <div class="slide-in-right" slideIn>

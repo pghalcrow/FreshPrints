@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+.related {
+  background: var(--prints-dark-blue);
+  color: var(--prints-white);
+  text-align: center;
+  padding: 32px 3rem;
+}
+
+.related h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 16px;
+}
+
+.related ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 14px;
+  margin: 0 0 16px;
+  padding: 0 !important;
+}
+
+.related li a {
+  display: inline-block;
+  border: 1.5px solid var(--prints-blue);
+  padding: 6px 12px;
+  font-size: 1rem;
+  color: var(--prints-white);
+  text-decoration: none;
+}
+
+.related li a:hover {
+  background: var(--prints-blue);
+}
+
+.related p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.related p a {
+  color: var(--prints-white);
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .related {
+    padding: 24px 20px;
+  }
+}

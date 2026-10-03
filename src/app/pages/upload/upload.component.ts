@@ -4,6 +4,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { RecaptchaModule, RecaptchaComponent } from 'ng-recaptcha';
+import { AnalyticsService } from '../../services/analytics.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-upload',
@@ -29,7 +31,19 @@ export class UploadComponent {
   siteKey = environment.recaptchaSiteKey;
   captchaExecuting = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private analytics: AnalyticsService,
+    private seo: SeoService
+  ) {
+    this.seo.updatePageMeta({
+      title: 'Upload Print Files | Fresh Prints San Diego',
+      description: 'Upload your print-ready PDF, PNG or JPG files to Fresh Prints for emergency and same-day printing in San Diego. Or call 619-500-1959.',
+      keywords: 'upload print files San Diego, send files for rush printing, emergency printing file upload',
+      canonical: 'https://realfreshprints.com/upload',
+      ogImage: 'https://realfreshprints.com/assets/images/fresh_prints.png'
+    });
+  }
 
   // ---------------- File drag/drop ----------------
   onDragOver(event: DragEvent): void {
@@ -68,6 +82,7 @@ export class UploadComponent {
     }
     this.selectedFile = file;
     this.showForm = true;
+    this.analytics.track('file_upload_start', { file_type: file.type });
   }
 
   closeForm(): void {
@@ -202,6 +217,7 @@ export class UploadComponent {
           }
         } else {
           this.uploadStatus = '❌ Failed to get upload URL';
+          this.analytics.track('file_upload_failed', { stage: 'request_url' });
           this.cleanupCaptcha();
         }
       }
@@ -216,12 +232,17 @@ export class UploadComponent {
     }).subscribe({
       next: () => {
         this.uploadStatus = '✅ Upload successful';
+        this.analytics.track('generate_lead', {
+          lead_source: 'file_upload',
+          file_type: this.selectedFile!.type
+        });
         this.resetForm();
         this.cleanupCaptcha();
       },
       error: (err) => {
         console.error('❌ Upload failed:', err);
         this.uploadStatus = '❌ Upload failed';
+        this.analytics.track('file_upload_failed', { stage: 'upload' });
         this.cleanupCaptcha();
       }
     });

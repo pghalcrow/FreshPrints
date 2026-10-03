@@ -131,6 +131,11 @@ h2 b {
   padding-left: 0;
 }
 
+.centered-list a {
+  color: var(--prints-white);
+  text-decoration: underline;
+}
+
 .description .top-space {
   display: inline-block;
   margin-top: 24px;

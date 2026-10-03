@@ -16,8 +16,11 @@ const routes = [
   '/kearny-postcards',
   '/sleeves',
   '/stickers',
+  '/faq',
   '/upload',
 ];
+const siteUrl = 'https://realfreshprints.com';
+// Old URLs that 301 to their real page (S3 website redirect).
 const routeAliases = [
   { route: '/services', sourceRoute: '/' },
   { route: '/contact', sourceRoute: '/upload' },
@@ -78,6 +81,8 @@ routeAliases.forEach(({ route, sourceRoute }) => {
     'cp',
     prerenderedIndex,
     `s3://${bucket}/${routePath}`,
+    '--website-redirect',
+    `${siteUrl}${sourceRoute}`,
     '--content-type',
     'text/html',
     '--cache-control',

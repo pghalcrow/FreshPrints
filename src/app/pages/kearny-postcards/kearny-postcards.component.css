@@ -194,6 +194,7 @@
   padding: 4px 12px; font-size: 13px; margin-bottom: 14px;
 }
 .product-card h4 { margin: 0 0 8px; color: var(--prints-dark-blue); font-size: 19px; font-weight: 800; }
+.product-card h4 a { color: inherit; text-decoration: underline; }
 .product-card p { margin: 0; font-size: 14px; color: var(--prints-blue); line-height: 1.5; }
 
 @media (max-width: 860px) {

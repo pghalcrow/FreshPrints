@@ -1,0 +1,12 @@
+<nav class="related" aria-label="More printing services">
+  <h2>More Emergency Printing in San Diego</h2>
+  <ul>
+    <li *ngFor="let link of links">
+      <a [routerLink]="link.url">{{ link.label }}</a>
+    </li>
+  </ul>
+  <p>
+    Files ready? <a routerLink="/upload">Upload your print files</a> or read the
+    <a routerLink="/faq">emergency printing FAQ</a>.
+  </p>
+</nav>
