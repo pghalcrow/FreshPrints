@@ -17,7 +17,9 @@ export class PackagingComponent {
       description: 'Emergency packaging printing for San Diego businesses. Custom boxes, cartons, folding packaging and sleeves on rush timelines. Call 619-500-1959.',
       keywords: 'emergency packaging printing San Diego, rush packaging printing, same-day packaging San Diego, custom packaging San Diego',
       canonical: 'https://realfreshprints.com/packaging',
-      ogImage: 'https://realfreshprints.com/assets/images/packaging.webp'
+      ogImage: 'https://realfreshprints.com/assets/images/packaging.webp',
+      breadcrumb: 'Packaging Printing',
+      service: 'Emergency Packaging Printing'
     });
   }
 }

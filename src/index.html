@@ -54,21 +54,45 @@
       {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
+        "@id": "https://realfreshprints.com/#business",
         "name": "Fresh Prints",
-        "description": "Emergency printing services in San Diego, CA. Same-day and rush orders for booklets, flyers, stickers, labels, packaging, catalogs, postcards, sleeves, and more.",
+        "description": "Emergency printing services in San Diego, CA. Same-day and rush orders for booklets, flyers, stickers, labels, packaging, catalogs, postcards, sleeves, and more. Delivery-only: finished orders are delivered directly to businesses.",
         "url": "https://realfreshprints.com",
         "telephone": "+1-619-500-1959",
         "priceRange": "$$",
+        "logo": "https://realfreshprints.com/assets/images/fresh_prints.png",
+        "image": "https://realfreshprints.com/assets/images/booklets.jpg",
+        "sameAs": ["https://share.google/pBuylCOR9DFD7fZhg"],
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "San Diego",
           "addressRegion": "CA",
           "addressCountry": "US"
         },
-        "areaServed": {
-          "@type": "Place",
-          "name": "San Diego County, CA"
-        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "20:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "08:00",
+            "closes": "16:00"
+          }
+        ],
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "San Diego County, CA" },
+          { "@type": "City", "name": "San Diego, CA" },
+          { "@type": "City", "name": "Poway, CA" },
+          { "@type": "Place", "name": "Kearny Mesa, San Diego, CA" },
+          { "@type": "Place", "name": "Sorrento Valley, San Diego, CA" },
+          { "@type": "Place", "name": "Mission Valley, San Diego, CA" },
+          { "@type": "Place", "name": "Carmel Valley, San Diego, CA" },
+          { "@type": "Place", "name": "Rancho Bernardo, San Diego, CA" }
+        ],
         "serviceType": [
           "Emergency Printing",
           "Same-Day Printing",

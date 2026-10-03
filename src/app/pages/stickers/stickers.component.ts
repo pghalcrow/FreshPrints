@@ -17,7 +17,9 @@ export class StickersComponent {
       description: 'Emergency sticker printing for San Diego businesses. Custom stickers are our fastest item, with same-day turnaround on most orders. Call 619-500-1959.',
       keywords: 'emergency sticker printing San Diego, rush sticker printing, same-day sticker printing San Diego, custom stickers San Diego',
       canonical: 'https://realfreshprints.com/stickers',
-      ogImage: 'https://realfreshprints.com/assets/images/stickers.webp'
+      ogImage: 'https://realfreshprints.com/assets/images/stickers.webp',
+      breadcrumb: 'Sticker Printing',
+      service: 'Emergency Sticker Printing'
     });
   }
 }

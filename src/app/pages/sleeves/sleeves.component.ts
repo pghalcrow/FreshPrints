@@ -17,7 +17,9 @@ export class SleevesComponent {
       description: 'Emergency packaging sleeve printing in San Diego. Custom sleeves for jars, bottles, boxes and apparel, same-day or next-day. Call 619-500-1959.',
       keywords: 'emergency sleeve printing San Diego, rush packaging sleeves, same-day sleeve printing San Diego, custom product sleeves San Diego',
       canonical: 'https://realfreshprints.com/sleeves',
-      ogImage: 'https://realfreshprints.com/assets/images/sleeves_02.jpg'
+      ogImage: 'https://realfreshprints.com/assets/images/sleeves_02.jpg',
+      breadcrumb: 'Packaging Sleeve Printing',
+      service: 'Emergency Packaging Sleeve Printing'
     });
   }
 }

@@ -17,7 +17,9 @@ export class FlyersComponent {
       description: 'Emergency flyer printing for San Diego businesses. Same-day and next-day rush flyers in full color, multiple sizes and finishes. Call 619-500-1959.',
       keywords: 'emergency flyer printing San Diego, rush flyer printing, same-day flyer printing San Diego, custom flyers San Diego',
       canonical: 'https://realfreshprints.com/flyers',
-      ogImage: 'https://realfreshprints.com/assets/images/flyers.webp'
+      ogImage: 'https://realfreshprints.com/assets/images/flyers.webp',
+      breadcrumb: 'Flyer Printing',
+      service: 'Emergency Flyer Printing'
     });
   }
 }

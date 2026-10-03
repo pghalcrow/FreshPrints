@@ -17,7 +17,9 @@ export class PostcardsComponent {
       description: 'Emergency postcard printing in San Diego. Rush and same-day custom postcards for direct mail, promotions and corporate campaigns. Call 619-500-1959.',
       keywords: 'emergency postcard printing San Diego, rush postcard printing, same-day postcard printing San Diego, custom postcards San Diego',
       canonical: 'https://realfreshprints.com/postcards',
-      ogImage: 'https://realfreshprints.com/assets/images/postcards.webp'
+      ogImage: 'https://realfreshprints.com/assets/images/postcards.webp',
+      breadcrumb: 'Postcard Printing',
+      service: 'Emergency Postcard Printing'
     });
   }
 }

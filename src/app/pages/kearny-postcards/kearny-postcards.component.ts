@@ -15,7 +15,9 @@ export class KearnyPostcardsComponent {
       description: 'Same-day and next-day postcard printing for Kearny Mesa and San Diego businesses. Up to 10,000 postcards, free delivery, custom sizes. Call 619-500-1959.',
       keywords: 'postcard printing Kearny Mesa, same-day postcard printing San Diego, rush postcard printing San Diego, direct mail printing Kearny Mesa',
       canonical: 'https://realfreshprints.com/kearny-postcards',
-      ogImage: 'https://realfreshprints.com/assets/images/postcards.webp'
+      ogImage: 'https://realfreshprints.com/assets/images/postcards.webp',
+      breadcrumb: 'Kearny Mesa Postcard Printing',
+      service: 'Same-Day Postcard Printing'
     });
   }
 }
