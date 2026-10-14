@@ -2,119 +2,196 @@
   <!-- Fullscreen drag overlay -->
   <div class="drag-overlay" [class.active]="isDragging"></div>
 
-  <div
-    class="file-uploader"
-    (dragover)="onDragOver($event)"
-    (drop)="onDrop($event)"
-    (dragleave)="onDragLeave($event)"
-    [class.dragging]="isDragging">
-    <p>Drag and Drop Files</p>
-    <p>or</p>
-    <div class="btn-div">
-      <button class="upload-btn" (click)="fileInput.click()">Upload Files</button>
-      <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
-    </div>
+  <!-- Intro -->
+  <header class="upload-hero">
+    <h1>Upload Your Print Files</h1>
+    <p class="hero-sub">
+      Send us your print-ready file and we'll call you to confirm specs, quantity and turnaround.
+    </p>
+    <p class="b2b-notice">
+      Real Fresh Prints serves businesses only. We do not accept orders from individual consumers.
+    </p>
+  </header>
+
+  <!-- Drop zone -->
+  <div class="file-uploader" [class.dragging]="isDragging" (click)="fileInput.click()">
+    <svg class="upload-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 16V4m0 0-4.5 4.5M12 4l4.5 4.5" />
+      <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+    </svg>
+    <p class="drop-title">Drag &amp; drop your file here</p>
+    <p class="drop-or">or</p>
+    <button class="upload-btn" type="button" (click)="$event.stopPropagation(); fileInput.click()">Browse Files</button>
+    <input #fileInput type="file" accept=".pdf,.png,.jpg,.jpeg" (change)="onFileSelected($event)" hidden />
+    <p class="drop-hint">PDF, PNG or JPG</p>
   </div>
-  <p id="upload-status">{{ uploadStatus }}</p>
+  <p class="page-status" *ngIf="pageStatus" role="alert">{{ pageStatus }}</p>
+
+  <p class="call-cta">
+    Prefer to talk it through? Call <a href="tel:6195001959">(619) 500-1959</a>
+  </p>
+
+
+  <!-- File specs -->
+  <div class="specs">
+    <h2>File Specs</h2>
+    <ul>
+      <li><strong>File types:</strong> PDF, PNG or JPG</li>
+      <li><strong>Resolution:</strong> 300 DPI at final print size</li>
+      <li><strong>Bleed:</strong> 0.125" on all sides for edge-to-edge designs</li>
+      <li><strong>Safe zone:</strong> keep text 0.125" inside the trim line</li>
+      <li><strong>Fonts:</strong> outlined or embedded in your PDF</li>
+    </ul>
+    <p>Not sure your file is ready? Upload it anyway. We'll let you know if anything needs fixing.</p>
+  </div>
 </section>
 
-<div class="form-overlay" *ngIf="showForm">
-  <form id="form-box" (ngSubmit)="onSubmit($event)" #uploadForm="ngForm" novalidate>
-    <button class="close-btn" type="button" (click)="closeForm()">X</button>
+<div class="form-overlay" *ngIf="showForm" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
+  <!-- Success -->
+  <div id="form-box" class="success-box" *ngIf="uploadComplete; else formTpl" role="status">
+    <button class="close-btn" type="button" (click)="closeForm()" aria-label="Close">&times;</button>
+    <svg class="success-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="10" />
+      <path d="m7.5 12.5 3 3 6-6.5" />
+    </svg>
+    <h2>Thanks, {{ submittedName }}!</h2>
+    <p>Your file is in. We'll review it and call you shortly to confirm the details.</p>
+    <button class="submit-btn" type="button" (click)="closeForm()">Done</button>
+  </div>
 
-    <!-- Name Row -->
-    <div class="name-row">
-      <!-- First Name -->
+  <ng-template #formTpl>
+    <form id="form-box" (ngSubmit)="onSubmit($event)" #uploadForm="ngForm" novalidate>
+      <div class="form-header">
+        <h2>Almost done</h2>
+        <button class="close-btn" type="button" (click)="closeForm()" aria-label="Close">&times;</button>
+      </div>
+      <p class="form-sub">Tell us who you are so we can follow up on your file.</p>
+
+      <p class="form-notice">Real Fresh Prints serves businesses only. Please provide your company name to continue.</p>
+
+      <!-- File card -->
+      <div class="file-card" *ngIf="selectedFile">
+        <svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" />
+          <path d="M14 3v5h5" />
+        </svg>
+        <div class="file-meta">
+          <span class="file-name">{{ selectedFile.name }}</span>
+          <span class="file-size">{{ formatFileSize(selectedFile.size) }}</span>
+        </div>
+        <button class="change-link" type="button" (click)="formFileInput.click()" [disabled]="isUploading">Change</button>
+        <input #formFileInput type="file" accept=".pdf,.png,.jpg,.jpeg" (change)="onFileSelected($event)" hidden />
+      </div>
+
+      <!-- Name Row -->
+      <div class="name-row">
+        <!-- First Name -->
+        <div class="form-group">
+          <label for="firstName">First name <span class="req">*</span></label>
+          <input
+            type="text"
+            id="firstName"
+            [(ngModel)]="firstName"
+            name="firstName"
+            #firstNameCtrl="ngModel"
+            required
+            autocomplete="given-name"
+            [ngClass]="{ 'is-invalid': firstNameCtrl.invalid && firstNameCtrl.touched }"
+            (blur)="firstNameCtrl.control.markAsTouched()" />
+          <div class="error-message" *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched">First name is required.</div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label for="lastName">Last name <span class="req">*</span></label>
+          <input
+            type="text"
+            id="lastName"
+            [(ngModel)]="lastName"
+            name="lastName"
+            #lastNameCtrl="ngModel"
+            required
+            autocomplete="family-name"
+            [ngClass]="{ 'is-invalid': lastNameCtrl.invalid && lastNameCtrl.touched }"
+            (blur)="lastNameCtrl.control.markAsTouched()" />
+          <div class="error-message" *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched">Last name is required.</div>
+        </div>
+      </div>
+
+      <!-- Company -->
       <div class="form-group">
-        <label for="firstName">*First Name:</label>
+        <label for="company">Company <span class="req">*</span></label>
         <input
           type="text"
-          id="firstName"
-          [(ngModel)]="firstName"
-          name="firstName"
-          #firstNameCtrl="ngModel"
+          id="company"
+          [(ngModel)]="company"
+          name="company"
+          #companyCtrl="ngModel"
           required
-          [ngClass]="{ 'is-invalid': firstNameCtrl.invalid && firstNameCtrl.touched }"
-          (blur)="firstNameCtrl.control.markAsTouched()" />
-        <div class="error-message" *ngIf="firstNameCtrl.invalid && firstNameCtrl.touched">First name is required.</div>
+          autocomplete="organization"
+          [ngClass]="{ 'is-invalid': companyCtrl.invalid && companyCtrl.touched }"
+          (blur)="companyCtrl.control.markAsTouched()" />
+        <div class="error-message" *ngIf="companyCtrl.invalid && companyCtrl.touched">Company is required.</div>
       </div>
 
-      <!-- Last Name -->
+      <!-- Email -->
       <div class="form-group">
-        <label for="lastName">*Last Name:</label>
+        <label for="email">Email <span class="req">*</span></label>
         <input
-          type="text"
-          id="lastName"
-          [(ngModel)]="lastName"
-          name="lastName"
-          #lastNameCtrl="ngModel"
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          #emailCtrl="ngModel"
           required
-          [ngClass]="{ 'is-invalid': lastNameCtrl.invalid && lastNameCtrl.touched }"
-          (blur)="lastNameCtrl.control.markAsTouched()" />
-        <div class="error-message" *ngIf="lastNameCtrl.invalid && lastNameCtrl.touched">Last name is required.</div>
+          autocomplete="email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          [ngClass]="{ 'is-invalid': emailCtrl.invalid && emailCtrl.touched }"
+          (blur)="emailCtrl.control.markAsTouched()" />
+        <div class="error-message" *ngIf="emailCtrl.errors?.['required'] && emailCtrl.touched">Email is required.</div>
+        <div class="error-message" *ngIf="emailCtrl.errors?.['pattern'] && emailCtrl.touched">
+          Please enter a valid email.
+        </div>
       </div>
-    </div>
 
-    <!-- Email -->
-    <div class="form-group">
-      <label for="email">*Email:</label>
-      <input
-        type="email"
-        id="email"
-        [(ngModel)]="email"
-        name="email"
-        #emailCtrl="ngModel"
-        required
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-        [ngClass]="{ 'is-invalid': emailCtrl.invalid && emailCtrl.touched }"
-        (blur)="emailCtrl.control.markAsTouched()" />
-      <div class="error-message" *ngIf="emailCtrl.errors?.['required'] && emailCtrl.touched">Email is required.</div>
-      <div class="error-message" *ngIf="emailCtrl.errors?.['pattern'] && emailCtrl.touched">
-        Please enter a valid email.
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="phone">Phone number <span class="req">*</span></label>
+        <input
+          type="tel"
+          id="phone"
+          maxlength="14"
+          [(ngModel)]="phone"
+          name="phone"
+          #phoneCtrl="ngModel"
+          required
+          autocomplete="tel-national"
+          (input)="formatPhone($event)"
+          (keypress)="allowOnlyNumbers($event)"
+          inputmode="numeric"
+          [ngClass]="{ 'is-invalid': phoneCtrl.touched && isPhoneInvalid() }"
+          (blur)="phoneCtrl.control.markAsTouched()" />
+        <div class="error-message" *ngIf="phoneCtrl.errors?.['required'] && phoneCtrl.touched">
+          Phone number is required.
+        </div>
+        <div class="error-message" *ngIf="phoneCtrl.touched && isPhoneInvalid()">Must be 10 digits.</div>
       </div>
-    </div>
 
-    <!-- Phone -->
-    <div class="form-group">
-      <label for="phone">*Phone Number:</label>
-      <input
-        type="tel"
-        id="phone"
-        maxlength="14"
-        [(ngModel)]="phone"
-        name="phone"
-        #phoneCtrl="ngModel"
-        required
-        (input)="formatPhone($event)"
-        (keypress)="allowOnlyNumbers($event)"
-        inputmode="numeric"
-        [ngClass]="{ 'is-invalid': phoneCtrl.touched && isPhoneInvalid() }"
-        (blur)="phoneCtrl.control.markAsTouched()" />
-      <div class="error-message" *ngIf="phoneCtrl.errors?.['required'] && phoneCtrl.touched">
-        Phone number is required.
-      </div>
-      <div class="error-message" *ngIf="phoneCtrl.touched && isPhoneInvalid()">Must be 10 digits.</div>
-    </div>
+      <!-- Captcha -->
+      <re-captcha [siteKey]="siteKey" size="invisible" (resolved)="onCaptchaResolved($event)"> </re-captcha>
 
-    <!-- File Upload -->
-    <div class="form-group">
-      <label for="file">Upload File:</label>
-      <p *ngIf="selectedFile">Selected File: {{ selectedFile.name }}</p>
-      <p id="upload-status">{{ uploadStatus }}</p>
-      <div class="btn-div">
-        <button class="upload-btn" (click)="fileInput.click()" type="button">Change File</button>
-        <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none" />
-      </div>
-    </div>
+      <!-- Status -->
+      <p class="form-status" *ngIf="statusIsError" role="alert">{{ statusText }}</p>
 
-    <!-- Captcha -->
-    <re-captcha [siteKey]="siteKey" size="invisible" (resolved)="onCaptchaResolved($event)"> </re-captcha>
-
-    <!-- Submit -->
-    <div class="btn-div">
-      <button id="btn-submit" type="submit" class="upload-btn" [disabled]="uploadForm.invalid || !selectedFile">
-        Upload
+      <!-- Submit -->
+      <button
+        id="btn-submit"
+        type="submit"
+        class="submit-btn"
+        [disabled]="uploadForm.invalid || !selectedFile || isUploading">
+        <span class="spinner" *ngIf="isUploading" aria-hidden="true"></span>
+        {{ isUploading ? 'Uploading…' : 'Upload File' }}
       </button>
-    </div>
-  </form>
+    </form>
+  </ng-template>
 </div>

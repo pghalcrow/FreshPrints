@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,14 +16,18 @@ import { SeoService } from '../../services/seo.service';
 })
 export class UploadComponent {
   isDragging = false;
+  pageStatus = '';
   uploadStatus = '';
   isUploading = false;
   showForm = false;
+  uploadComplete = false;
+  submittedName = '';
   selectedFile: File | null = null;
 
   // form fields
   firstName = '';
   lastName = '';
+  company = '';
   email = '';
   phone = '';
 
@@ -44,6 +48,20 @@ export class UploadComponent {
       ogImage: 'https://realfreshprints.com/assets/images/fresh_prints.png',
       breadcrumb: 'Upload Files'
     });
+  }
+
+  // Progress messages are shown by the submit button; only errors are displayed in the form.
+  get statusIsError(): boolean {
+    return this.uploadStatus.startsWith('❌');
+  }
+
+  get statusText(): string {
+    return this.uploadStatus.replace(/^❌\s*/, '');
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.showForm && !this.isUploading) this.closeForm();
   }
 
   // ---------------- File drag/drop ----------------
@@ -73,29 +91,46 @@ export class UploadComponent {
   }
 
   handleFile(file: File): void {
+    if (this.isUploading) return;
+
     // Clear previous status
+    this.pageStatus = '';
     this.uploadStatus = '';
 
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
     if (!allowedTypes.includes(file.type)) {
-      this.uploadStatus = `❌ File type not allowed. Only PNG, JPG, and PDF are supported.`;
+      const message = "That file type isn't supported. Please upload a PDF, PNG or JPG.";
+      if (this.showForm && !this.uploadComplete) {
+        this.uploadStatus = `❌ ${message}`;
+      } else {
+        this.pageStatus = message;
+      }
       return;
     }
+    if (this.uploadComplete) this.resetForm();
     this.selectedFile = file;
     this.showForm = true;
     this.analytics.track('file_upload_start', { file_type: file.type });
   }
 
   closeForm(): void {
+    if (this.uploadComplete) this.resetForm();
     this.showForm = false;
     this.selectedFile = null;
+    this.uploadStatus = '';
+  }
+
+  formatFileSize(bytes: number): string {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
   // ---------------- Form submit ----------------
   onSubmit(event: Event): void {
     event.preventDefault();
 
-    if (!this.firstName || !this.lastName || !this.email || !this.phone) {
+    if (!this.firstName || !this.lastName || !this.company.trim() || !this.email || !this.phone) {
       this.uploadStatus = '❌ Please fill out all required fields.';
       return;
     }
@@ -152,6 +187,7 @@ export class UploadComponent {
       fileType: this.selectedFile!.type,
       firstName: this.firstName,
       lastName: this.lastName,
+      company: this.company.trim(),
       email: this.email,
       phone: this.phone,
       recaptchaToken: token
@@ -217,7 +253,7 @@ export class UploadComponent {
             console.warn('⚠️ Retry skipped because CAPTCHA execution is already in progress.');
           }
         } else {
-          this.uploadStatus = '❌ Failed to get upload URL';
+          this.uploadStatus = "❌ We couldn't start your upload. Please try again, or call us at (619) 500-1959.";
           this.analytics.track('file_upload_failed', { stage: 'request_url' });
           this.cleanupCaptcha();
         }
@@ -232,17 +268,18 @@ export class UploadComponent {
       headers: { 'Content-Type': this.selectedFile!.type }
     }).subscribe({
       next: () => {
-        this.uploadStatus = '✅ Upload successful';
+        this.uploadStatus = '';
+        this.submittedName = this.firstName.trim();
+        this.uploadComplete = true;
         this.analytics.track('generate_lead', {
           lead_source: 'file_upload',
           file_type: this.selectedFile!.type
         });
-        this.resetForm();
         this.cleanupCaptcha();
       },
       error: (err) => {
         console.error('❌ Upload failed:', err);
-        this.uploadStatus = '❌ Upload failed';
+        this.uploadStatus = '❌ Upload failed. Please try again, or call us at (619) 500-1959.';
         this.analytics.track('file_upload_failed', { stage: 'upload' });
         this.cleanupCaptcha();
       }
@@ -251,9 +288,11 @@ export class UploadComponent {
 
   // ---------------- Helpers ----------------
   private resetForm(): void {
-    this.closeForm();
+    this.uploadComplete = false;
+    this.submittedName = '';
     this.firstName = '';
     this.lastName = '';
+    this.company = '';
     this.email = '';
     this.phone = '';
   }
