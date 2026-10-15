@@ -25,10 +25,12 @@
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  line-height: 1.4;
   margin: 0 0 14px;
+  padding-top: 0;
 }
 
-.faq-intro h1 {
+.faq-intro .display {
   font-size: 44px;
   line-height: 1.1;
   margin: 0 0 14px;
@@ -38,7 +40,7 @@
   padding-top: 0;
 }
 
-.faq-intro h1 em {
+.faq-intro .display em {
   font-style: normal;
   color: var(--prints-yellow);
 }
@@ -444,7 +446,7 @@ details.faq-item .answer li {
     padding: 40px 24px;
   }
 
-  .faq-intro h1 {
+  .faq-intro .display {
     font-size: 32px;
   }
 
