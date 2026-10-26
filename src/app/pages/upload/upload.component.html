@@ -23,7 +23,7 @@
     <p class="drop-or">or</p>
     <button class="upload-btn" type="button" (click)="$event.stopPropagation(); fileInput.click()">Browse Files</button>
     <input #fileInput type="file" accept=".pdf,.png,.jpg,.jpeg" (change)="onFileSelected($event)" hidden />
-    <p class="drop-hint">PDF, PNG or JPG</p>
+    <p class="drop-hint">High-quality PDF only</p>
   </div>
   <p class="page-status" *ngIf="pageStatus" role="alert">{{ pageStatus }}</p>
 
@@ -36,7 +36,7 @@
   <div class="specs">
     <h2>File Specs</h2>
     <ul>
-      <li><strong>File types:</strong> PDF, PNG or JPG</li>
+      <li><strong>File type:</strong> high-quality PDF only</li>
       <li><strong>Resolution:</strong> 300 DPI at final print size</li>
       <li><strong>Bleed:</strong> 0.125" on all sides for edge-to-edge designs</li>
       <li><strong>Safe zone:</strong> keep text 0.125" inside the trim line</li>

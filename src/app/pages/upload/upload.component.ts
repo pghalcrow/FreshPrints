@@ -42,7 +42,7 @@ export class UploadComponent {
   ) {
     this.seo.updatePageMeta({
       title: 'Upload Print Files | Fresh Prints San Diego',
-      description: 'Upload your print-ready PDF, PNG or JPG files to Fresh Prints for emergency and same-day printing in San Diego. Or call 619-500-1959.',
+      description: 'Upload your high-quality, print-ready PDF files to Fresh Prints for emergency and same-day printing in San Diego. Or call 619-500-1959.',
       keywords: 'upload print files San Diego, send files for rush printing, emergency printing file upload',
       canonical: 'https://realfreshprints.com/upload',
       ogImage: 'https://realfreshprints.com/assets/images/fresh_prints.png',

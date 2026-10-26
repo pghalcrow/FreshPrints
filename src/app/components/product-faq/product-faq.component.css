@@ -1,0 +1,101 @@
+:host {
+  display: block;
+}
+
+/* Accordion styles mirror the FAQ page */
+.product-faq {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 3rem 56px;
+}
+
+.product-faq h2 {
+  color: var(--prints-blue);
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0 0 20px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+}
+
+details.faq-item {
+  border-top: 1px solid rgba(35, 87, 137, 0.18);
+}
+
+details.faq-item:last-child {
+  border-bottom: 1px solid rgba(35, 87, 137, 0.18);
+}
+
+details.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 48px 18px 0;
+  position: relative;
+  color: var(--prints-blue);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+details.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+details.faq-item summary:hover,
+details.faq-item[open] summary {
+  color: var(--prints-red);
+}
+
+details.faq-item summary::after {
+  content: "+";
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+details.faq-item[open] summary::after {
+  content: "\2212";
+}
+
+details.faq-item .answer {
+  padding: 0 48px 20px 0;
+}
+
+details.faq-item .answer p {
+  margin: 0;
+  color: #1a1f2e;
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: left;
+  padding: 0;
+}
+
+.product-faq .more {
+  margin: 20px 0 0;
+  font-size: 1rem;
+  text-align: left;
+  padding: 0;
+}
+
+.product-faq .more a {
+  color: var(--prints-blue);
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  .product-faq {
+    padding: 32px 20px 40px;
+  }
+
+  .product-faq h2 {
+    font-size: 1.4rem;
+  }
+}

@@ -478,3 +478,28 @@ details.faq-item .answer li {
     grid-template-columns: 1fr;
   }
 }
+
+/* Product FAQ links */
+.product-faq-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: 0;
+  padding: 0 !important;
+}
+
+.product-faq-links a {
+  display: inline-block;
+  border: 1.5px solid var(--prints-blue);
+  padding: 8px 14px;
+  color: var(--prints-blue);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.product-faq-links a:hover {
+  background: var(--prints-blue);
+  color: var(--prints-white);
+}

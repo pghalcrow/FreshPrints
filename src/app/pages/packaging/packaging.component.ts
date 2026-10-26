@@ -3,14 +3,18 @@ import { FadeImageDirective } from '../../directives/fade-image.directive';
 import { SlideInDirective } from '../../directives/slide-in.directive';
 import { SeoService } from '../../services/seo.service';
 import { RelatedProductsComponent } from '../../components/related-products/related-products.component';
+import { ProductFaqComponent } from '../../components/product-faq/product-faq.component';
+import { PRODUCT_FAQS } from '../../data/product-faqs';
 
 @Component({
   selector: 'app-packaging',
-  imports: [FadeImageDirective, SlideInDirective, RelatedProductsComponent],
+  imports: [FadeImageDirective, SlideInDirective, RelatedProductsComponent, ProductFaqComponent],
   templateUrl: './packaging.component.html',
   styleUrl: './packaging.component.css'
 })
 export class PackagingComponent {
+  faqs = PRODUCT_FAQS['packaging'];
+
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
       title: 'Emergency Packaging Printing San Diego | Fresh Prints',

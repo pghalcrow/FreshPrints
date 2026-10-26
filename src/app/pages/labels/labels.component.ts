@@ -3,14 +3,18 @@ import { FadeImageDirective } from '../../directives/fade-image.directive';
 import { SlideInDirective } from '../../directives/slide-in.directive';
 import { SeoService } from '../../services/seo.service';
 import { RelatedProductsComponent } from '../../components/related-products/related-products.component';
+import { ProductFaqComponent } from '../../components/product-faq/product-faq.component';
+import { PRODUCT_FAQS } from '../../data/product-faqs';
 
 @Component({
   selector: 'app-labels',
-  imports: [FadeImageDirective, SlideInDirective, RelatedProductsComponent],
+  imports: [FadeImageDirective, SlideInDirective, RelatedProductsComponent, ProductFaqComponent],
   templateUrl: './labels.component.html',
   styleUrl: './labels.component.css'
 })
 export class LabelsComponent {
+  faqs = PRODUCT_FAQS['labels'];
+
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
       title: 'Emergency Label Printing San Diego | Fresh Prints',
