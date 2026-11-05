@@ -65,7 +65,7 @@
         <h2>Almost done</h2>
         <button class="close-btn" type="button" (click)="closeForm()" aria-label="Close">&times;</button>
       </div>
-      <p class="form-sub">Tell us who you are so we can follow up on your file.</p>
+      <p class="form-sub">Tell us who you are and what you need so we can follow up on your file.</p>
 
       <p class="form-notice">Fresh Prints serves businesses only. Please provide your company name to continue.</p>
 
@@ -175,6 +175,43 @@
           Phone number is required.
         </div>
         <div class="error-message" *ngIf="phoneCtrl.touched && isPhoneInvalid()">Must be 10 digits.</div>
+      </div>
+
+      <!-- Specs Row -->
+      <div class="name-row">
+        <!-- Quantity -->
+        <div class="form-group">
+          <label for="quantity">Quantity <span class="req">*</span></label>
+          <input
+            type="text"
+            id="quantity"
+            [(ngModel)]="quantity"
+            name="quantity"
+            #quantityCtrl="ngModel"
+            required
+            maxlength="100"
+            placeholder="e.g. 500"
+            [ngClass]="{ 'is-invalid': quantityCtrl.invalid && quantityCtrl.touched }"
+            (blur)="quantityCtrl.control.markAsTouched()" />
+          <div class="error-message" *ngIf="quantityCtrl.invalid && quantityCtrl.touched">Quantity is required.</div>
+        </div>
+
+        <!-- Final Size -->
+        <div class="form-group">
+          <label for="size">Final size <span class="req">*</span></label>
+          <input
+            type="text"
+            id="size"
+            [(ngModel)]="size"
+            name="size"
+            #sizeCtrl="ngModel"
+            required
+            maxlength="100"
+            placeholder='e.g. 24" x 36"'
+            [ngClass]="{ 'is-invalid': sizeCtrl.invalid && sizeCtrl.touched }"
+            (blur)="sizeCtrl.control.markAsTouched()" />
+          <div class="error-message" *ngIf="sizeCtrl.invalid && sizeCtrl.touched">Final size is required.</div>
+        </div>
       </div>
 
       <!-- Captcha -->

@@ -30,6 +30,8 @@ export class UploadComponent {
   company = '';
   email = '';
   phone = '';
+  quantity = '';
+  size = '';
 
   @ViewChild(RecaptchaComponent) recaptcha!: RecaptchaComponent;
   siteKey = environment.recaptchaSiteKey;
@@ -130,7 +132,7 @@ export class UploadComponent {
   onSubmit(event: Event): void {
     event.preventDefault();
 
-    if (!this.firstName || !this.lastName || !this.company.trim() || !this.email || !this.phone) {
+    if (!this.firstName || !this.lastName || !this.company.trim() || !this.email || !this.phone || !this.quantity.trim() || !this.size.trim()) {
       this.uploadStatus = '❌ Please fill out all required fields.';
       return;
     }
@@ -190,6 +192,8 @@ export class UploadComponent {
       company: this.company.trim(),
       email: this.email,
       phone: this.phone,
+      quantity: this.quantity.trim(),
+      size: this.size.trim(),
       recaptchaToken: token
     };
 
@@ -295,6 +299,8 @@ export class UploadComponent {
     this.company = '';
     this.email = '';
     this.phone = '';
+    this.quantity = '';
+    this.size = '';
   }
 
   private cleanupCaptcha(): void {
