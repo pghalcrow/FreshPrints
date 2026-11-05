@@ -3,7 +3,7 @@ export interface FaqItem {
   answer: string;
 }
 
-// Answers come from the owner's FAQ responses (src/assets/FAQs.pdf), lightly edited
+// Answers come from the owner's FAQ responses, lightly edited
 export const PRODUCT_FAQS: Record<string, FaqItem[]> = {
   booklets: [
     {
