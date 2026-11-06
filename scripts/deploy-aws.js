@@ -2,6 +2,9 @@ const { existsSync } = require('fs');
 const { resolve } = require('path');
 const { spawnSync } = require('child_process');
 
+// Fresh Prints has its own IAM user; its keys live in the "freshprints" AWS CLI profile.
+process.env.AWS_PROFILE = process.env.AWS_PROFILE || 'freshprints';
+
 const bucket = process.env.AWS_DEPLOY_BUCKET || 'realfreshprints.com';
 const region = process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || 'us-east-2';
 const outputDir = resolve('./dist/fresh-prints/browser');
@@ -18,6 +21,7 @@ const routes = [
   '/stickers',
   '/faq',
   '/upload',
+  '/admin',
 ];
 const siteUrl = 'https://realfreshprints.com';
 // Old URLs that 301 to their real page (S3 website redirect).

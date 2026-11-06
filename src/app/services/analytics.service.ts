@@ -1,5 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { TrafficService } from './traffic.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class AnalyticsService {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) platformId: object
+    @Inject(PLATFORM_ID) platformId: object,
+    private traffic: TrafficService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -38,6 +40,7 @@ export class AnalyticsService {
       const link = target?.closest?.('a[href^="tel:"], [onclick*="tel:"]');
       if (!link) return;
 
+      this.traffic.trackAction('phone_click');
       this.track('phone_call_click', {
         link_text: (link.textContent || '').trim().slice(0, 100),
         link_location: this.locationOf(link)

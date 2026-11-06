@@ -1,0 +1,226 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SiteBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:GetBucketWebsite"
+      ],
+      "Resource": "arn:aws:s3:::realfreshprints.com"
+    },
+    {
+      "Sid": "SiteObjects",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": "arn:aws:s3:::realfreshprints.com/*"
+    },
+    {
+      "Sid": "CloudFormationStack",
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:CreateStack",
+        "cloudformation:UpdateStack",
+        "cloudformation:DescribeStacks",
+        "cloudformation:DescribeStackEvents",
+        "cloudformation:DescribeStackResources",
+        "cloudformation:GetTemplate",
+        "cloudformation:CreateChangeSet",
+        "cloudformation:DescribeChangeSet",
+        "cloudformation:ExecuteChangeSet",
+        "cloudformation:DeleteChangeSet",
+        "cloudformation:DeleteStack"
+      ],
+      "Resource": "arn:aws:cloudformation:us-east-2:470065668628:stack/freshprints-analytics/*"
+    },
+    {
+      "Sid": "CloudFormationTemplateChecks",
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:GetTemplateSummary",
+        "cloudformation:ValidateTemplate"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DynamoDBTable",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:CreateTable",
+        "dynamodb:DescribeTable",
+        "dynamodb:UpdateTable",
+        "dynamodb:DescribeTimeToLive",
+        "dynamodb:UpdateTimeToLive",
+        "dynamodb:DescribeContinuousBackups",
+        "dynamodb:TagResource",
+        "dynamodb:UntagResource",
+        "dynamodb:ListTagsOfResource",
+        "dynamodb:Query"
+      ],
+      "Resource": "arn:aws:dynamodb:us-east-2:470065668628:table/freshprints-analytics-*"
+    },
+    {
+      "Sid": "CognitoCreatePool",
+      "Effect": "Allow",
+      "Action": "cognito-idp:CreateUserPool",
+      "Resource": "*"
+    },
+    {
+      "Sid": "CognitoManagePool",
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:DescribeUserPool",
+        "cognito-idp:UpdateUserPool",
+        "cognito-idp:GetUserPoolMfaConfig",
+        "cognito-idp:SetUserPoolMfaConfig",
+        "cognito-idp:CreateUserPoolClient",
+        "cognito-idp:DescribeUserPoolClient",
+        "cognito-idp:UpdateUserPoolClient",
+        "cognito-idp:DeleteUserPoolClient",
+        "cognito-idp:TagResource",
+        "cognito-idp:UntagResource",
+        "cognito-idp:ListTagsForResource",
+        "cognito-idp:AdminCreateUser",
+        "cognito-idp:AdminGetUser",
+        "cognito-idp:ListUsers"
+      ],
+      "Resource": "arn:aws:cognito-idp:us-east-2:470065668628:userpool/*"
+    },
+    {
+      "Sid": "HttpApi",
+      "Effect": "Allow",
+      "Action": [
+        "apigateway:GET",
+        "apigateway:POST",
+        "apigateway:PATCH",
+        "apigateway:PUT",
+        "apigateway:DELETE",
+        "apigateway:TagResource",
+        "apigateway:UntagResource"
+      ],
+      "Resource": [
+        "arn:aws:apigateway:us-east-2::/apis",
+        "arn:aws:apigateway:us-east-2::/apis/*",
+        "arn:aws:apigateway:us-east-2::/tags/*"
+      ]
+    },
+    {
+      "Sid": "FunctionRoles",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateRole",
+        "iam:GetRole",
+        "iam:DeleteRole",
+        "iam:UpdateAssumeRolePolicy",
+        "iam:PutRolePolicy",
+        "iam:GetRolePolicy",
+        "iam:DeleteRolePolicy",
+        "iam:TagRole",
+        "iam:UntagRole"
+      ],
+      "Resource": "arn:aws:iam::470065668628:role/freshprints-analytics-*"
+    },
+    {
+      "Sid": "PassFunctionRoles",
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "arn:aws:iam::470065668628:role/freshprints-analytics-*",
+      "Condition": {
+        "StringEquals": {
+          "iam:PassedToService": "lambda.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid": "Functions",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:CreateFunction",
+        "lambda:DeleteFunction",
+        "lambda:GetFunction",
+        "lambda:GetFunctionConfiguration",
+        "lambda:UpdateFunctionCode",
+        "lambda:UpdateFunctionConfiguration",
+        "lambda:PutFunctionConcurrency",
+        "lambda:DeleteFunctionConcurrency",
+        "lambda:AddPermission",
+        "lambda:RemovePermission",
+        "lambda:TagResource",
+        "lambda:UntagResource",
+        "lambda:ListTags",
+        "lambda:InvokeFunction",
+        "lambda:GetFunctionUrlConfig",
+        "lambda:ListVersionsByFunction"
+      ],
+      "Resource": "arn:aws:lambda:us-east-2:470065668628:function:freshprints-*"
+    },
+    {
+      "Sid": "FunctionLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:DeleteLogGroup",
+        "logs:PutRetentionPolicy",
+        "logs:DeleteRetentionPolicy",
+        "logs:TagResource",
+        "logs:UntagResource",
+        "logs:TagLogGroup",
+        "logs:ListTagsForResource",
+        "logs:ListTagsLogGroup",
+        "logs:FilterLogEvents",
+        "logs:GetLogEvents"
+      ],
+      "Resource": [
+        "arn:aws:logs:us-east-2:470065668628:log-group:/aws/lambda/freshprints-*",
+        "arn:aws:logs:us-east-2:470065668628:log-group:/aws/lambda/freshprints-*:*"
+      ]
+    },
+    {
+      "Sid": "DescribeLogGroups",
+      "Effect": "Allow",
+      "Action": "logs:DescribeLogGroups",
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudFrontCreate",
+      "Effect": "Allow",
+      "Action": [
+        "cloudfront:CreateDistribution",
+        "cloudfront:CreateOriginRequestPolicy",
+        "cloudfront:ListOriginRequestPolicies",
+        "cloudfront:ListCachePolicies"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudFrontManage",
+      "Effect": "Allow",
+      "Action": [
+        "cloudfront:GetDistribution",
+        "cloudfront:GetDistributionConfig",
+        "cloudfront:UpdateDistribution",
+        "cloudfront:DeleteDistribution",
+        "cloudfront:TagResource",
+        "cloudfront:UntagResource",
+        "cloudfront:ListTagsForResource",
+        "cloudfront:GetOriginRequestPolicy",
+        "cloudfront:GetOriginRequestPolicyConfig",
+        "cloudfront:UpdateOriginRequestPolicy",
+        "cloudfront:DeleteOriginRequestPolicy",
+        "cloudfront:GetCachePolicy",
+        "cloudfront:GetCachePolicyConfig"
+      ],
+      "Resource": [
+        "arn:aws:cloudfront::470065668628:distribution/*",
+        "arn:aws:cloudfront::470065668628:origin-request-policy/*",
+        "arn:aws:cloudfront::470065668628:cache-policy/*"
+      ]
+    }
+  ]
+}

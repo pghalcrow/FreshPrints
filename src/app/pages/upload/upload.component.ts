@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { RecaptchaModule, RecaptchaComponent } from 'ng-recaptcha';
 import { AnalyticsService } from '../../services/analytics.service';
 import { SeoService } from '../../services/seo.service';
+import { TrafficService } from '../../services/traffic.service';
 
 @Component({
   selector: 'app-upload',
@@ -40,7 +41,8 @@ export class UploadComponent {
   constructor(
     private http: HttpClient,
     private analytics: AnalyticsService,
-    private seo: SeoService
+    private seo: SeoService,
+    private traffic: TrafficService
   ) {
     this.seo.updatePageMeta({
       title: 'Upload Print Files | Fresh Prints San Diego',
@@ -275,6 +277,7 @@ export class UploadComponent {
         this.uploadStatus = '';
         this.submittedName = this.firstName.trim();
         this.uploadComplete = true;
+        this.traffic.trackAction('file_upload');
         this.analytics.track('generate_lead', {
           lead_source: 'file_upload',
           file_type: this.selectedFile!.type

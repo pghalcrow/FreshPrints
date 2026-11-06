@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AnalyticsService } from './services/analytics.service';
+import { TrafficService } from './services/traffic.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { AnalyticsService } from './services/analytics.service';
 export class AppComponent {
   title = 'FreshPrints';
 
-  constructor(analytics: AnalyticsService) {
+  constructor(analytics: AnalyticsService, traffic: TrafficService) {
     analytics.trackPhoneClicks();
+    traffic.start();
   }
 }

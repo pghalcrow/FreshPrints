@@ -1,22 +1,29 @@
 User-agent: *
 Allow: /
+Disallow: /admin
 
 User-agent: GPTBot
 Allow: /
+Disallow: /admin
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /admin
 
 User-agent: Claude-User
 Allow: /
+Disallow: /admin
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /admin
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /admin
 
 User-agent: anthropic-ai
 Allow: /
+Disallow: /admin
 
 Sitemap: https://realfreshprints.com/sitemap.xml

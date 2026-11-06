@@ -1,0 +1,394 @@
+/* Unencapsulated: shared by the admin child components, scoped under .admin-root.
+   Also neutralizes the marketing site's global styles (centered paragraphs, bordered tables). */
+
+.admin-root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --surface-raised: #ffffff;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --text-muted-strong: #6b6a65;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.1);
+  --border-strong: rgba(11, 11, 11, 0.22);
+  --chip: #f0efec;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --link: #235789;
+  --accent: #235789;
+  --accent-text: #ffffff;
+  --danger: #b9272c;
+  --focus: #2a78d6;
+  --notice-bg: #e9f3fd;
+  --alert-bg: #fdeceb;
+
+  min-height: 100vh;
+  background: var(--page);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+@media (prefers-color-scheme: dark) {
+  .admin-root {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --surface-raised: #242423;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --text-muted-strong: #a3a29b;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.22);
+    --chip: #2c2c2a;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --link: #86b6ef;
+    --accent: #3987e5;
+    --accent-text: #ffffff;
+    --danger: #e66767;
+    --focus: #86b6ef;
+    --notice-bg: #13263d;
+    --alert-bg: #3a1716;
+  }
+}
+
+.admin-root *,
+.admin-root *::before,
+.admin-root *::after {
+  box-sizing: border-box;
+}
+
+.admin-root p {
+  text-align: left;
+  margin: 0 0 12px;
+}
+
+.admin-root h1 {
+  padding: 0;
+  margin: 0 0 16px;
+  font-size: 24px;
+  font-weight: 650;
+}
+
+.admin-root h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.admin-root a {
+  color: var(--link);
+}
+
+/* ---------- Layout ---------- */
+
+.admin-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.brand-sub {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.tabs button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-secondary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tabs button:hover {
+  background: var(--chip);
+}
+
+.tabs button.active {
+  background: var(--chip);
+  color: var(--text-primary);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  min-width: 0;
+}
+
+.account-email {
+  color: var(--text-secondary);
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.card {
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+}
+
+/* ---------- Auth screens ---------- */
+
+.auth-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10vh 16px 32px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.auth-card .brand {
+  margin-bottom: 20px;
+}
+
+.auth-card h1 {
+  font-size: 22px;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.auth-card label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.auth-card .primary-btn {
+  margin-top: 16px;
+}
+
+.hint {
+  color: var(--text-muted-strong);
+  font-size: 12px;
+  margin: 0 !important;
+}
+
+/* ---------- Controls ---------- */
+
+.admin-root input,
+.admin-root select {
+  min-height: 38px;
+  padding: 7px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.admin-root input:focus-visible,
+.admin-root select:focus-visible,
+.admin-root button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.primary-btn,
+.ghost-btn,
+.danger-btn {
+  min-height: 38px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-btn {
+  border: none;
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.ghost-btn {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+  min-height: 34px;
+  padding: 5px 12px;
+}
+
+.ghost-btn:hover {
+  background: var(--chip);
+}
+
+.danger-btn {
+  border: 1px solid var(--danger);
+  background: transparent;
+  color: var(--danger);
+  font-size: 14px;
+  min-height: 34px;
+  padding: 5px 12px;
+}
+
+.primary-btn:disabled,
+.ghost-btn:disabled,
+.danger-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.admin-root .link-btn {
+  background: none;
+  border: none;
+  padding: 4px 0;
+  color: var(--link);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.admin-root .link-btn:hover {
+  text-decoration: underline;
+}
+
+.notice,
+.alert {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.notice {
+  background: var(--notice-bg);
+}
+
+.alert {
+  background: var(--alert-bg);
+  border-left: 3px solid var(--danger);
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Tables (reset the site's global table styles) ---------- */
+
+.admin-root .table-wrap {
+  overflow-x: auto;
+}
+
+.admin-root table.data-table {
+  width: 100%;
+  max-width: none;
+  border: none !important;
+  border-radius: 0;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.admin-root table.data-table thead th {
+  padding: 8px 10px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 13px;
+  text-align: left;
+  border-bottom: 1px solid var(--axis);
+  white-space: nowrap;
+}
+
+.admin-root table.data-table tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--grid);
+  color: inherit;
+  font-weight: normal;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.admin-root table.data-table tbody tr:hover {
+  background: var(--chip);
+}
+
+.admin-root table.data-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .admin-header {
+    padding: 12px 16px;
+  }
+
+  .admin-main {
+    padding: 16px;
+  }
+
+  .account {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

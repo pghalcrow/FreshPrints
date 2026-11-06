@@ -1,0 +1,211 @@
+<!-- Filters: one row, scoping everything below -->
+<div class="filters">
+  <label class="field">
+    <span class="sr-only">Date range</span>
+    <select [(ngModel)]="preset" (ngModelChange)="applyPreset()" name="preset">
+      @for (p of presets; track p.value) {
+        <option [value]="p.value">{{ p.label }}</option>
+      }
+    </select>
+  </label>
+  @if (preset === 'custom') {
+    <label class="field">
+      <span>From</span>
+      <input type="date" [(ngModel)]="from" [max]="to || today" (change)="onCustomChange()" name="from" />
+    </label>
+    <label class="field">
+      <span>To</span>
+      <input type="date" [(ngModel)]="to" [min]="from" [max]="today" (change)="onCustomChange()" name="to" />
+    </label>
+  }
+  <button type="button" class="ghost-btn" (click)="load()" [disabled]="loading()">Refresh</button>
+  @if (loading()) {
+    <span class="muted" role="status">Loading…</span>
+  }
+  @if (isLocal) {
+    <label class="demo-toggle">
+      <input type="checkbox" [(ngModel)]="demo" (ngModelChange)="toggleDemo()" name="demo" />
+      Sample data <span class="muted">(localhost only)</span>
+    </label>
+  }
+</div>
+
+@if (demo) {
+  <p class="notice" role="status">Showing generated sample data, not real visits. Uncheck “Sample data” to see the real numbers.</p>
+}
+
+@if (error()) {
+  <p class="alert" role="alert">{{ error() }}</p>
+}
+
+@if (stats(); as s) {
+  <div class="content" [class.stale]="loading()">
+    <!-- Stat tiles -->
+    <section class="tiles" aria-label="Summary">
+      <div class="tile">
+        <span class="tile-label">Phone number clicks</span>
+        <span class="tile-value">{{ s.totals.phoneClicks | number }}</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">File uploads</span>
+        <span class="tile-value">{{ s.totals.fileUploads | number }}</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">Visits</span>
+        <span class="tile-value">{{ s.totals.visits | number }}</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">Page views</span>
+        <span class="tile-value">{{ s.totals.pageViews | number }}</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">Avg. time on page</span>
+        <span class="tile-value">{{ duration(s.totals.avgTimeOnPageSec) }}</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">Avg. visit length</span>
+        <span class="tile-value">{{ duration(s.totals.avgVisitDurationSec) }}</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">Pages per visit</span>
+        <span class="tile-value">{{ s.totals.pagesPerVisit | number: '1.1-1' }}</span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">From the San Diego area</span>
+        <span class="tile-value">
+          @if (s.locations.locatedVisits) {
+            {{ s.locations.sanDiegoVisits / s.locations.locatedVisits | percent }}
+          } @else {
+            –
+          }
+        </span>
+      </div>
+      <div class="tile">
+        <span class="tile-label">Single-page visits</span>
+        <span class="tile-value">{{ s.totals.singlePageVisitRate | percent }}</span>
+      </div>
+    </section>
+
+    @if (!s.totals.pageViews) {
+      <p class="empty">No visits recorded for this range yet. Visits by admins signed in on this browser aren't counted.</p>
+    }
+
+    <!-- Traffic over time -->
+    @if (s.daily.length > 1) {
+      <section class="card">
+        <h2>Traffic by day</h2>
+        <app-traffic-chart [data]="s.daily" />
+      </section>
+    }
+
+    <!-- Pages -->
+    <section class="card">
+      <h2>Pages</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Page</th>
+              <th class="num">Views</th>
+              <th class="num">Visitors</th>
+              <th class="num">Avg. time</th>
+              <th class="num">Entrances</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of visiblePages(); track p.path) {
+              <tr>
+                <td>
+                  <span class="page-path">{{ p.path }}</span>
+                  @if (p.title) {
+                    <span class="page-title">{{ p.title }}</span>
+                  }
+                </td>
+                <td class="num">{{ p.views | number }}</td>
+                <td class="num">{{ p.visitors | number }}</td>
+                <td class="num">{{ duration(p.avgTimeSec) }}</td>
+                <td class="num">{{ p.entrances | number }}</td>
+              </tr>
+            } @empty {
+              <tr><td colspan="5" class="muted">No page views in this range.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      @if (s.pages.length > 10) {
+        <button type="button" class="link-btn" (click)="showAllPages.set(!showAllPages())">
+          {{ showAllPages() ? 'Show top 10' : 'Show all ' + s.pages.length + ' pages' }}
+        </button>
+      }
+    </section>
+
+    <!-- Technology + sources -->
+    <div class="grid-2">
+      <ng-container *ngTemplateOutlet="breakdown; context: { title: 'Phone clicks by page', list: s.phoneClicksByPage }" />
+      <ng-container *ngTemplateOutlet="breakdown; context: { title: 'Devices', list: s.devices }" />
+      <ng-container *ngTemplateOutlet="breakdown; context: { title: 'Browsers', list: s.browsers }" />
+      <ng-container *ngTemplateOutlet="breakdown; context: { title: 'Operating systems', list: s.operatingSystems }" />
+      <ng-container *ngTemplateOutlet="breakdown; context: { title: 'Where visitors came from', list: s.referrers }" />
+      <ng-container *ngTemplateOutlet="breakdown; context: { title: 'Cities', list: s.locations.cities }" />
+      <ng-container *ngTemplateOutlet="breakdown; context: { title: 'States & countries', list: s.locations.regions }" />
+    </div>
+
+    <!-- Recent activity -->
+    <section class="card">
+      <h2>Recent page views</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Page</th>
+              <th class="num">Time on page</th>
+              <th>Location</th>
+              <th>Device</th>
+              <th>Browser</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (r of s.recent; track $index) {
+              <tr>
+                <td class="nowrap">{{ time(r.ts) }}</td>
+                <td><span class="page-path">{{ r.path }}</span></td>
+                <td class="num">{{ duration(r.timeSec) }}</td>
+                <td>{{ r.location || '–' }}</td>
+                <td>{{ r.device }} · {{ r.os }}</td>
+                <td>{{ r.browser }}</td>
+              </tr>
+            } @empty {
+              <tr><td colspan="6" class="muted">Nothing yet.</td></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="footnote">
+      Phone clicks count taps or clicks on the phone number (they can't tell whether a call was actually placed). File uploads count files that finished uploading. Visits end after 30 minutes without a new page view. Time counts only while the page is open and visible. Devices, browsers, sources and locations are counted once per visit. Location is approximate, from the visitor's internet connection: VPNs, company networks and mobile carriers can place someone in the wrong city. “San Diego area” means San Diego County. Days follow Pacific time.
+    </p>
+  </div>
+}
+
+<ng-template #breakdown let-title="title" let-list="list">
+  <section class="card">
+    <h2>{{ title }}</h2>
+    @if (list.length) {
+      <ul class="bars">
+        @for (item of list.slice(0, 8); track item.name) {
+          <li>
+            <div class="bar-label">
+              <span>{{ item.name }}</span>
+              <span class="bar-value">{{ item.count | number }} <span class="muted">· {{ share(item, list) | percent }}</span></span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" [style.width.%]="barWidth(item, list)"></div></div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="muted">No data.</p>
+    }
+  </section>
+</ng-template>

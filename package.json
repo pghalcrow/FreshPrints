@@ -9,7 +9,8 @@
     "test": "ng test",
     "generate-sitemap": "node scripts/generate-sitemap.js",
     "deploy:aws": "node scripts/deploy-aws.js",
-    "serve:ssr:FreshPrints": "node dist/fresh-prints/server/server.mjs"
+    "serve:ssr:FreshPrints": "node dist/fresh-prints/server/server.mjs",
+    "deploy:analytics": "node scripts/deploy-analytics.js"
   },
   "private": true,
   "dependencies": {

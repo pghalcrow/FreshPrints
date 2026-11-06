@@ -1,0 +1,114 @@
+<div class="admin-root">
+  @if (screen() === 'app' && !signedOut) {
+    <header class="admin-header">
+      <div class="brand">
+        <span class="brand-name">Fresh Prints</span>
+        <span class="brand-sub">Admin</span>
+      </div>
+      <nav class="tabs" aria-label="Admin sections">
+        <button type="button" [class.active]="tab() === 'traffic'" [attr.aria-current]="tab() === 'traffic' ? 'page' : null" (click)="tab.set('traffic')">Traffic</button>
+        <button type="button" [class.active]="tab() === 'users'" [attr.aria-current]="tab() === 'users' ? 'page' : null" (click)="tab.set('users')">Users</button>
+      </nav>
+      <div class="account">
+        <span class="account-email">{{ auth.email() }}</span>
+        <button type="button" class="ghost-btn" (click)="signOut()">Sign out</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      @if (tab() === 'traffic') {
+        <h1>Website traffic</h1>
+        <app-admin-dashboard />
+      } @else {
+        <h1>Users</h1>
+        <app-admin-users />
+      }
+    </main>
+  } @else {
+    <main class="auth-wrap">
+      <div class="auth-card">
+        <div class="brand">
+          <span class="brand-name">Fresh Prints</span>
+          <span class="brand-sub">Admin</span>
+        </div>
+
+        @if (notice()) {
+          <p class="notice" role="status">{{ notice() }}</p>
+        }
+        @if (error()) {
+          <p class="alert" role="alert">{{ error() }}</p>
+        }
+
+        @switch (signedOut ? 'sign-in' : screen()) {
+          @case ('loading') {
+            <p class="muted">Loading…</p>
+          }
+
+          @case ('not-configured') {
+            <h1>Not set up yet</h1>
+            <p class="muted">The analytics backend hasn't been connected to this build of the site.</p>
+          }
+
+          @case ('sign-in') {
+            <h1>Sign in</h1>
+            <form (ngSubmit)="signIn()">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" [(ngModel)]="email" autocomplete="username" required />
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" [(ngModel)]="password" autocomplete="current-password" required />
+              <button type="submit" class="primary-btn" [disabled]="busy() || !email || !password">
+                {{ busy() ? 'Signing in…' : 'Sign in' }}
+              </button>
+            </form>
+            <button type="button" class="link-btn" (click)="go('forgot')">Forgot your password?</button>
+          }
+
+          @case ('new-password') {
+            <h1>Choose a password</h1>
+            <p class="muted">Welcome! Set your own password to finish signing in.</p>
+            <form (ngSubmit)="setNewPassword()">
+              <ng-container *ngTemplateOutlet="newPasswordFields" />
+              <button type="submit" class="primary-btn" [disabled]="busy() || !newPassword || !confirmPassword">
+                {{ busy() ? 'Saving…' : 'Save and sign in' }}
+              </button>
+            </form>
+          }
+
+          @case ('forgot') {
+            <h1>Reset your password</h1>
+            <p class="muted">Enter your email and we'll send you a code.</p>
+            <form (ngSubmit)="sendResetCode()">
+              <label for="forgot-email">Email</label>
+              <input id="forgot-email" name="email" type="email" [(ngModel)]="email" autocomplete="username" required />
+              <button type="submit" class="primary-btn" [disabled]="busy() || !email">
+                {{ busy() ? 'Sending…' : 'Send code' }}
+              </button>
+            </form>
+            <button type="button" class="link-btn" (click)="go('sign-in')">Back to sign in</button>
+          }
+
+          @case ('reset') {
+            <h1>Set a new password</h1>
+            <form (ngSubmit)="confirmReset()">
+              <label for="code">Code from your email</label>
+              <input id="code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" [(ngModel)]="code" required />
+              <ng-container *ngTemplateOutlet="newPasswordFields" />
+              <button type="submit" class="primary-btn" [disabled]="busy() || !code || !newPassword || !confirmPassword">
+                {{ busy() ? 'Saving…' : 'Update password' }}
+              </button>
+            </form>
+            <button type="button" class="link-btn" (click)="go('sign-in')">Back to sign in</button>
+          }
+        }
+      </div>
+    </main>
+  }
+</div>
+
+<ng-template #newPasswordFields>
+  <label for="new-password">New password</label>
+  <input id="new-password" name="newPassword" type="password" [(ngModel)]="newPassword" autocomplete="new-password" required />
+  <p class="hint">At least 12 characters, with upper and lowercase letters and a number.</p>
+  <label for="confirm-password">Confirm new password</label>
+  <input id="confirm-password" name="confirmPassword" type="password" [(ngModel)]="confirmPassword" autocomplete="new-password" required />
+</ng-template>

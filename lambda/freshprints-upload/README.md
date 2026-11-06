@@ -17,7 +17,7 @@ The deployed package also bundles `requests`/`boto3` dependencies, which are not
 this repo. To deploy a change, download the current package, swap in `app.py`, and upload:
 
 ```bash
-aws lambda get-function --function-name freshprints-upload --region us-east-2 --query Code.Location --output text
+aws lambda get-function --function-name freshprints-upload --region us-east-2 --profile freshprints --query Code.Location --output text
 # download that URL to package.zip, replace app.py inside it, then:
-aws lambda update-function-code --function-name freshprints-upload --region us-east-2 --zip-file fileb://package.zip
+aws lambda update-function-code --function-name freshprints-upload --region us-east-2 --zip-file fileb://package.zip --profile freshprints
 ```

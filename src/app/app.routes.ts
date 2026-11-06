@@ -36,5 +36,10 @@ export const routes: Routes = [
       { path: 'files/:fileKey', component: FilesRedirectComponent}
     ],
   },
+  {
+    path: 'admin',
+    title: 'Admin | Fresh Prints',
+    loadComponent: () => import('./admin/admin.component').then((m) => m.AdminComponent)
+  },
   { path: '**', redirectTo: '' },
 ];

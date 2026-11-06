@@ -1,0 +1,378 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  Fresh Prints website traffic analytics: first-party page view collection,
+  stats API and admin logins for realfreshprints.com/admin.
+
+# Deploy with: npm run deploy:analytics  (see backend/analytics/README.md)
+# Lambda code is uploaded by the deploy script after the stack update, so the
+# inline code below is only a placeholder used when the functions are first created.
+
+Parameters:
+  AllowedOrigins:
+    Type: CommaDelimitedList
+    Default: https://realfreshprints.com,https://www.realfreshprints.com,http://localhost:4200
+  AdminUrl:
+    Type: String
+    Default: https://realfreshprints.com/admin
+  RetentionDays:
+    Type: Number
+    Default: 396 # 13 months
+
+Resources:
+  # ---------------- Data ----------------
+  PageViewsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: freshprints-analytics-pageviews
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - { AttributeName: pk, AttributeType: S }
+        - { AttributeName: sk, AttributeType: S }
+      KeySchema:
+        - { AttributeName: pk, KeyType: HASH }
+        - { AttributeName: sk, KeyType: RANGE }
+      TimeToLiveSpecification:
+        AttributeName: expiresAt
+        Enabled: true
+
+  # ---------------- Admin logins ----------------
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      UserPoolName: freshprints-analytics-admins
+      DeletionProtection: ACTIVE
+      UsernameAttributes: [email]
+      AutoVerifiedAttributes: [email]
+      UsernameConfiguration:
+        CaseSensitive: false
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: true
+        InviteMessageTemplate:
+          EmailSubject: You've been invited to the Fresh Prints dashboard
+          EmailMessage: !Sub >-
+            <p>You've been given access to the Fresh Prints website traffic dashboard.</p>
+            <p>Sign in at <a href="${AdminUrl}">${AdminUrl}</a></p>
+            <p>Email: {username}<br>Temporary password: <strong>{####}</strong></p>
+            <p>You'll be asked to choose your own password the first time you sign in.
+            This temporary password expires in 7 days.</p>
+      VerificationMessageTemplate:
+        DefaultEmailOption: CONFIRM_WITH_CODE
+        EmailSubject: Your Fresh Prints dashboard code
+        EmailMessage: 'Your Fresh Prints dashboard verification code is {####}'
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 12
+          RequireLowercase: true
+          RequireUppercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+          TemporaryPasswordValidityDays: 7
+      AccountRecoverySetting:
+        RecoveryMechanisms:
+          - { Name: verified_email, Priority: 1 }
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: freshprints-admin-web
+      UserPoolId: !Ref UserPool
+      GenerateSecret: false
+      ExplicitAuthFlows: [ALLOW_USER_PASSWORD_AUTH, ALLOW_REFRESH_TOKEN_AUTH]
+      PreventUserExistenceErrors: ENABLED
+      EnableTokenRevocation: true
+      AccessTokenValidity: 60
+      IdTokenValidity: 60
+      RefreshTokenValidity: 30
+      TokenValidityUnits:
+        AccessToken: minutes
+        IdToken: minutes
+        RefreshToken: days
+
+  # ---------------- Functions ----------------
+  CollectRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: freshprints-analytics-collect-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: { Service: lambda.amazonaws.com }
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: collect
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: [dynamodb:PutItem, dynamodb:UpdateItem]
+                Resource: !GetAtt PageViewsTable.Arn
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !GetAtt CollectLogGroup.Arn
+
+  ApiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: freshprints-analytics-api-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: { Service: lambda.amazonaws.com }
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: api
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:Query
+                Resource: !GetAtt PageViewsTable.Arn
+              - Effect: Allow
+                Action:
+                  - cognito-idp:ListUsers
+                  - cognito-idp:AdminCreateUser
+                  - cognito-idp:AdminDeleteUser
+                  - cognito-idp:AdminDisableUser
+                  - cognito-idp:AdminEnableUser
+                  - cognito-idp:AdminResetUserPassword
+                  - cognito-idp:AdminUserGlobalSignOut
+                Resource: !GetAtt UserPool.Arn
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !GetAtt ApiLogGroup.Arn
+
+  CollectLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/freshprints-analytics-collect
+      RetentionInDays: 30
+
+  ApiLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/freshprints-analytics-api
+      RetentionInDays: 30
+
+  CollectFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: freshprints-analytics-collect
+      Description: Records page views from realfreshprints.com
+      Runtime: nodejs22.x
+      Handler: collect.handler
+      Role: !GetAtt CollectRole.Arn
+      MemorySize: 256
+      Timeout: 5
+      # Caps cost if the public endpoint is ever flooded.
+      ReservedConcurrentExecutions: 5
+      LoggingConfig:
+        LogGroup: !Ref CollectLogGroup
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref PageViewsTable
+          ALLOWED_ORIGINS: !Join [',', !Ref AllowedOrigins]
+          RETENTION_DAYS: !Ref RetentionDays
+          SITE_TIME_ZONE: America/Los_Angeles
+      Code:
+        ZipFile: "exports.handler = async () => ({ statusCode: 503 });"
+
+  ApiFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: freshprints-analytics-api
+      Description: Stats and user management API for realfreshprints.com/admin
+      Runtime: nodejs22.x
+      Handler: api.handler
+      Role: !GetAtt ApiRole.Arn
+      MemorySize: 512
+      Timeout: 20
+      LoggingConfig:
+        LogGroup: !Ref ApiLogGroup
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref PageViewsTable
+          USER_POOL_ID: !Ref UserPool
+          SITE_TIME_ZONE: America/Los_Angeles
+      Code:
+        ZipFile: "exports.handler = async () => ({ statusCode: 503 });"
+
+  # ---------------- HTTP API ----------------
+  HttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: freshprints-analytics
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins: !Ref AllowedOrigins
+        AllowMethods: [GET, POST, DELETE, OPTIONS]
+        AllowHeaders: [authorization, content-type]
+        MaxAge: 3600
+
+  HttpApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpApi
+      StageName: $default
+      AutoDeploy: true
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 50
+        ThrottlingRateLimit: 25
+
+  JwtAuthorizer:
+    Type: AWS::ApiGatewayV2::Authorizer
+    Properties:
+      ApiId: !Ref HttpApi
+      Name: cognito-admins
+      AuthorizerType: JWT
+      IdentitySource: [$request.header.Authorization]
+      JwtConfiguration:
+        Audience: [!Ref UserPoolClient]
+        Issuer: !Sub https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}
+
+  CollectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt CollectFunction.Arn
+      PayloadFormatVersion: '2.0'
+
+  ApiIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt ApiFunction.Arn
+      PayloadFormatVersion: '2.0'
+
+  CollectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: POST /collect
+      Target: !Sub integrations/${CollectIntegration}
+
+  StatsRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: GET /stats
+      AuthorizationType: JWT
+      AuthorizerId: !Ref JwtAuthorizer
+      Target: !Sub integrations/${ApiIntegration}
+
+  ListUsersRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: GET /users
+      AuthorizationType: JWT
+      AuthorizerId: !Ref JwtAuthorizer
+      Target: !Sub integrations/${ApiIntegration}
+
+  CreateUserRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: POST /users
+      AuthorizationType: JWT
+      AuthorizerId: !Ref JwtAuthorizer
+      Target: !Sub integrations/${ApiIntegration}
+
+  UserActionRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: POST /users/{id}/{action}
+      AuthorizationType: JWT
+      AuthorizerId: !Ref JwtAuthorizer
+      Target: !Sub integrations/${ApiIntegration}
+
+  DeleteUserRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: DELETE /users/{id}
+      AuthorizationType: JWT
+      AuthorizerId: !Ref JwtAuthorizer
+      Target: !Sub integrations/${ApiIntegration}
+
+  # ---------------- CloudFront (visitor location) ----------------
+  # The website sends page views through CloudFront, which adds the visitor's
+  # approximate location (from their IP) as headers. The IP itself is never stored.
+  CollectOriginRequestPolicy:
+    Type: AWS::CloudFront::OriginRequestPolicy
+    Properties:
+      OriginRequestPolicyConfig:
+        Name: freshprints-analytics-collect
+        Comment: Forward browser and CloudFront location headers to the analytics API
+        CookiesConfig: { CookieBehavior: none }
+        QueryStringsConfig: { QueryStringBehavior: none }
+        HeadersConfig:
+          HeaderBehavior: whitelist
+          Headers:
+            - Origin
+            - User-Agent
+            - Content-Type
+            - CloudFront-Viewer-Country
+            - CloudFront-Viewer-Country-Region
+            - CloudFront-Viewer-Country-Region-Name
+            - CloudFront-Viewer-City
+            - CloudFront-Viewer-Metro-Code
+
+  CollectDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: Fresh Prints analytics collection (adds visitor location)
+        PriceClass: PriceClass_100
+        HttpVersion: http2and3
+        Origins:
+          - Id: analytics-api
+            DomainName: !Sub ${HttpApi}.execute-api.${AWS::Region}.amazonaws.com
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols: [TLSv1.2]
+        DefaultCacheBehavior:
+          TargetOriginId: analytics-api
+          ViewerProtocolPolicy: https-only
+          AllowedMethods: [GET, HEAD, OPTIONS, PUT, PATCH, POST, DELETE]
+          CachedMethods: [GET, HEAD]
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # AWS managed "CachingDisabled"
+          OriginRequestPolicyId: !Ref CollectOriginRequestPolicy
+          Compress: false
+
+  CollectInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref CollectFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*/collect
+
+  ApiInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ApiFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*
+
+Outputs:
+  ApiUrl:
+    Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com
+  CollectUrl:
+    Value: !Sub https://${CollectDistribution.DomainName}/collect
+  UserPoolId:
+    Value: !Ref UserPool
+  UserPoolClientId:
+    Value: !Ref UserPoolClient
+  TableName:
+    Value: !Ref PageViewsTable
