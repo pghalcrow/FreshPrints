@@ -17,8 +17,8 @@ export class CatalogsComponent {
 
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Emergency Catalog Printing San Diego | Fresh Prints',
-      description: 'Emergency catalog printing for San Diego businesses. Professional, color-accurate catalogs with same-day and next-day turnaround. Call 619-500-1959.',
+      title: 'Emergency Business Catalog Printing, San Diego | Fresh Prints',
+      description: 'Businesses only. Emergency catalog printing in San Diego: color-accurate catalogs, same-day or next-day, with free delivery. Call 619-500-1959.',
       keywords: 'emergency catalog printing San Diego, rush catalog printing, same-day catalog printing San Diego, custom catalogs San Diego',
       canonical: 'https://realfreshprints.com/catalogs',
       ogImage: 'https://realfreshprints.com/assets/images/catalogs.webp',

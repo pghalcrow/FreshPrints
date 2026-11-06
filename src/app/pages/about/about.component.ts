@@ -12,7 +12,7 @@ import { SeoService } from '../../services/seo.service';
 export class AboutComponent {
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'About Fresh Prints | San Diego Emergency Printing',
+      title: 'About Fresh Prints | B2B Emergency Printing, San Diego',
       description: 'Fresh Prints specializes in emergency B2B printing in San Diego, with decades of commercial printing experience. When other printers say no, we deliver.',
       keywords: 'emergency printing San Diego, rush printing company San Diego, same-day printing San Diego, about Fresh Prints',
       canonical: 'https://realfreshprints.com/about',

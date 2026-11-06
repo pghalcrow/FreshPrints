@@ -176,6 +176,12 @@ footer {
   display: inline-block;
 }
 
+.footer-fine-print {
+  font-size: 12px;
+  margin: 0 1rem 0.5rem;
+  opacity: 0.9;
+}
+
 .copyright {
   font-size: 10px;
 }

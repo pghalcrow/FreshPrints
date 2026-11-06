@@ -90,6 +90,7 @@ export class SeoService {
         description: config.description,
         url: config.canonical,
         provider: { '@id': this.businessId },
+        audience: { '@type': 'BusinessAudience', audienceType: 'Businesses (B2B only)' },
         areaServed: { '@type': 'AdministrativeArea', name: 'San Diego County, CA' }
       });
     }

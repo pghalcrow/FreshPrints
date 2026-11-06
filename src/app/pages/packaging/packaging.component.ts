@@ -17,8 +17,8 @@ export class PackagingComponent {
 
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Emergency Packaging Printing San Diego | Fresh Prints',
-      description: 'Emergency packaging printing for San Diego businesses. Custom boxes, cartons, folding packaging and sleeves on rush timelines. Call 619-500-1959.',
+      title: 'Emergency Business Packaging Printing, San Diego | Fresh Prints',
+      description: 'Businesses only. Emergency packaging printing in San Diego: custom boxes, cartons and sleeves on rush timelines, with free delivery. Call 619-500-1959.',
       keywords: 'emergency packaging printing San Diego, rush packaging printing, same-day packaging San Diego, custom packaging San Diego',
       canonical: 'https://realfreshprints.com/packaging',
       ogImage: 'https://realfreshprints.com/assets/images/packaging.webp',

@@ -16,8 +16,8 @@ export class FaqComponent implements AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.seo.updatePageMeta({
-      title: 'FAQ | Emergency Printing San Diego | Fresh Prints',
-      description: 'Answers about emergency printing in San Diego: turnaround times, rush volume, delivery areas and file formats. Fresh Prints. Call 619-500-1959.',
+      title: 'FAQ | B2B Emergency Printing San Diego | Fresh Prints',
+      description: 'Answers about B2B emergency printing in San Diego: who we serve, minimums, sales tax, turnaround, free delivery and file formats. Call 619-500-1959.',
       keywords: 'emergency printing FAQ San Diego, rush printing questions, same-day printing San Diego, Fresh Prints FAQ',
       canonical: 'https://realfreshprints.com/faq',
       ogImage: 'https://realfreshprints.com/assets/images/fresh_prints.png',

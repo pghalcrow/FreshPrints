@@ -17,8 +17,8 @@ export class PostcardsComponent {
 
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Emergency Postcard Printing San Diego | Fresh Prints',
-      description: 'Emergency postcard printing in San Diego. Rush and same-day custom postcards for direct mail, promotions and corporate campaigns. Call 619-500-1959.',
+      title: 'Emergency Business Postcard Printing, San Diego | Fresh Prints',
+      description: 'Businesses only. Emergency postcard printing in San Diego: rush and same-day postcards for promotions and campaigns, with free delivery. Call 619-500-1959.',
       keywords: 'emergency postcard printing San Diego, rush postcard printing, same-day postcard printing San Diego, custom postcards San Diego',
       canonical: 'https://realfreshprints.com/postcards',
       ogImage: 'https://realfreshprints.com/assets/images/postcards.webp',

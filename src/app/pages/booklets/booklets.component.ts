@@ -17,8 +17,8 @@ export class BookletsComponent {
 
   constructor(private seo: SeoService) {
     this.seo.updatePageMeta({
-      title: 'Emergency Booklet Printing San Diego | Fresh Prints',
-      description: 'Emergency booklet printing for San Diego businesses: booklets, catalogs and training manuals, typically turned around in 1 to 3 days. Call 619-500-1959.',
+      title: 'Emergency Business Booklet Printing, San Diego | Fresh Prints',
+      description: 'Businesses only. Emergency booklet printing in San Diego: booklets, catalogs and training manuals in 1 to 3 days, with free delivery. Call 619-500-1959.',
       keywords: 'emergency booklet printing San Diego, rush booklet printing, fast booklet printing San Diego, custom booklets San Diego',
       canonical: 'https://realfreshprints.com/booklets',
       ogImage: 'https://realfreshprints.com/assets/images/booklets.webp',
